@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Health Nutrition Test Practice</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f766e'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18'%3E🥗%3C/text%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;color:#0f172a;background:#f0fdfa;min-height:100vh;-webkit-text-size-adjust:100%}
+.top{background:linear-gradient(135deg,#0f766e,#134e4a);color:#fff;padding:max(16px,env(safe-area-inset-top)) 20px 22px}
+.wrap{max-width:640px;margin:0 auto}
+.back{display:inline-flex;align-items:center;gap:6px;color:#ccfbf1;text-decoration:none;font-size:15px;font-weight:600;padding:6px 10px;margin-left:-10px;border-radius:10px}
+.back:active{background:rgba(255,255,255,.15)}
+h1{margin:8px 0 0;font-size:clamp(22px,5vw,30px)}
+.sub{margin:4px 0 0;color:#99f6e4;font-size:15px}
+main{padding:18px 16px 48px}
+.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 2px 0 #ccfbf1,0 8px 24px rgba(15,118,110,.10);border:1px solid #99f6e4}
+.topics{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.topics span,.tag{display:inline-block;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#ccfbf1;color:#115e59}
+ul.notes{margin:10px 0 0;padding-left:20px;color:#334155;font-size:16px;line-height:1.5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:14px;padding:14px 16px;font:inherit;font-size:17px;font-weight:700;cursor:pointer;min-height:52px}
+.btn.primary{background:#0f766e;color:#fff}
+.btn.primary:active{background:#115e59}
+.btn.ghost{background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;margin-top:10px}
+.progress{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;color:#115e59;font-size:14px;font-weight:700}
+.pbar{flex:1;height:8px;background:#ccfbf1;border-radius:99px;overflow:hidden}
+.pfill{height:100%;background:#0f766e;width:0;transition:width .2s ease}
+.qtext{font-size:19px;font-weight:700;line-height:1.4;margin:10px 0 16px}
+.choice{display:block;width:100%;text-align:left;background:#fff;border:2px solid #cbd5e1;border-radius:14px;padding:13px 14px;margin:0 0 10px;font:inherit;font-size:16px;line-height:1.4;cursor:pointer;min-height:52px}
+.choice:active:not(:disabled){transform:scale(.99)}
+.choice:disabled{cursor:default}
+.choice .ltr{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#f1f5f9;font-weight:800;font-size:13px;margin-right:10px;vertical-align:middle;flex:none;color:#334155}
+.choice.on{border-color:#0f766e;background:#f0fdfa}
+.choice.good{border-color:#15803d;background:#dcfce7}
+.choice.good .ltr{background:#15803d;color:#fff}
+.choice.bad{border-color:#b91c1c;background:#fee2e2}
+.choice.bad .ltr{background:#b91c1c;color:#fff}
+.feedback{margin-top:8px;padding:12px 14px;border-radius:14px;font-size:15px;line-height:1.5}
+.feedback.ok{background:#dcfce7;color:#14532d}
+.feedback.no{background:#fef3c7;color:#78350f}
+.feedback b{display:block;margin-bottom:4px;font-size:16px}
+.score .big{font-size:48px;font-weight:800;color:#0f766e;line-height:1}
+.score .pct{font-size:22px;font-weight:700;margin:4px 0 8px}
+.score .msg{color:#334155;font-size:16px;line-height:1.45}
+.secs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.secs span{font-size:13px;font-weight:700;padding:5px 10px;border-radius:999px;background:#e2e8f0;color:#334155}
+.secs span.full{background:#dcfce7;color:#166534}
+.secs span.none{background:#fee2e2;color:#991b1b}
+.secs span.some{background:#fef3c7;color:#92400e}
+footer{text-align:center;color:#64748b;font-size:13px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <a class="back" href="../">‹ Learning Hub</a>
+  <h1>Health Nutrition Test Practice</h1>
+  <p class="sub">Nutrition Test · Wednesday, November 18</p>
+</div></div>
+<main><div class="wrap" id="app"></div></main>
+<noscript><p style="padding:20px">This practice quiz needs JavaScript turned on.</p></noscript>
+<script src="questions.js"></script>
+<script>
+(function(){
+'use strict';
+const BANK = window.HEALTH_QUESTIONS;
+const $app = document.getElementById('app');
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LETTERS = 'ABCD';
+
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function buildQuiz(source){
+  return source.map((q) => {
+    const order = shuffle([0,1,2,3]);
+    return {
+      original: q,
+      topic: q.topic,
+      q: q.q,
+      choices: order.map(i => q.choices[i]),
+      answer: order.indexOf(q.answer),
+      explain: q.explain
+    };
+  });
+}
+
+let quiz = [];
+let answers = [];
+let i = 0;
+let mode = 'start'; // start | quiz | done | retry
+let retryFrom = null;
+
+function topicsList(){
+  const seen = [];
+  BANK.forEach(q => { if (seen.indexOf(q.topic) < 0) seen.push(q.topic); });
+  return seen;
+}
+
+function renderStart(){
+  mode = 'start';
+  $app.innerHTML =
+    '<section class="card">' +
+    '<button class="btn primary" id="go">Start practice</button>' +
+    '</section>';
+  document.getElementById('go').onclick = function(){ startQuiz(BANK, 'quiz'); };
+}
+
+function startQuiz(source, newMode){
+  quiz = buildQuiz(source);
+  answers = new Array(quiz.length).fill(null);
+  i = 0;
+  mode = newMode;
+  retryFrom = (newMode === 'retry') ? source : null;
+  renderQuestion();
+  window.scrollTo(0, 0);
+}
+
+function renderQuestion(){
+  const q = quiz[i];
+  const picked = answers[i];
+  const done = picked !== null;
+  const pct = Math.round(100 * i / quiz.length);
+  const label = mode === 'retry' ? 'Missed question' : 'Question';
+  let h = '<div class="progress"><span>' + label + ' ' + (i+1) + ' of ' + quiz.length + '</span><div class="pbar"><div class="pfill" style="width:' + pct + '%"></div></div></div>';
+  h += '<section class="card">';
+  h += '<span class="tag">' + esc(q.topic) + '</span> <span class="tag">' + esc(q.source) + '</span>';
+  h += '<p class="qtext">' + esc(q.q) + '</p>';
+  q.choices.forEach(function(c, ci){
+    let cls = 'choice';
+    if (done) {
+      if (ci === q.answer) cls += ' good';
+      else if (ci === picked) cls += ' bad';
+    }
+    h += '<button class="' + cls + '" data-ci="' + ci + '"' + (done ? ' disabled' : '') + '><span class="ltr">' + LETTERS[ci] + '</span>' + esc(c) + '</button>';
+  });
+  if (done) {
+    const ok = picked === q.answer;
+    h += '<div class="feedback ' + (ok ? 'ok' : 'no') + '"><b>' + (ok ? 'Correct' : 'Not quite') + '</b>' + esc(q.explain) + '</div>';
+    h += '<div style="height:14px"></div>';
+    h += '<button class="btn primary" id="next">' + (i < quiz.length - 1 ? 'Next question' : 'See my score') + '</button>';
+  }
+  h += '</section>';
+  $app.innerHTML = h;
+  $app.querySelectorAll('.choice').forEach(function(btn){
+    btn.onclick = function(){
+      if (answers[i] !== null) return;
+      answers[i] = +btn.dataset.ci;
+      renderQuestion();
+    };
+  });
+  const next = document.getElementById('next');
+  if (next) next.onclick = function(){
+    if (i < quiz.length - 1) { i++; renderQuestion(); window.scrollTo(0,0); }
+    else renderResults();
+  };
+}
+
+function renderResults(){
+  mode = 'done';
+  const T = quiz.length;
+  let got = 0;
+  const missedQs = [];
+  const byTopic = {};
+  quiz.forEach(function(q, qi){
+    const ok = answers[qi] === q.answer;
+    if (ok) got++;
+    else missedQs.push(q.original);
+    byTopic[q.topic] = byTopic[q.topic] || [0,0];
+    byTopic[q.topic][1]++;
+    if (ok) byTopic[q.topic][0]++;
+  });
+  const pct = Math.round(100 * got / T);
+  const msg = pct >= 90 ? 'Excellent — you are in great shape for the test.' :
+    pct >= 80 ? 'Strong work. Review the ones you missed, then try them again.' :
+    pct >= 70 ? 'Good start. Read the explanations and retry the missed questions.' :
+    'Keep going. Review the explanations, then retry the missed questions.';
+  let h = '<section class="card score">';
+  h += '<div class="big">' + got + ' / ' + T + '</div>';
+  h += '<div class="pct">' + pct + '%</div>';
+  h += '<div class="msg">' + msg + '</div>';
+  h += '<div class="secs">' + Object.keys(byTopic).map(function(t){
+    const v = byTopic[t];
+    const cls = v[0] === v[1] ? 'full' : v[0] === 0 ? 'none' : 'some';
+    return '<span class="' + cls + '">' + esc(t) + ': ' + v[0] + '/' + v[1] + '</span>';
+  }).join('') + '</div>';
+  if (missedQs.length) {
+    h += '<button class="btn primary" id="retry">Retry missed questions (' + missedQs.length + ')</button>';
+  } else {
+    h += '<p class="msg">Perfect score — no missed questions to retry.</p>';
+  }
+  h += '<button class="btn ghost" id="again">Start a new full practice</button>';
+  h += '<button class="btn ghost" id="home">Back to start</button>';
+  h += '</section>';
+  h += '<footer>Answers stay on this device only.</footer>';
+  $app.innerHTML = h;
+  window.scrollTo(0, 0);
+  const r = document.getElementById('retry');
+  if (r) r.onclick = function(){ startQuiz(missedQs, 'retry'); };
+  document.getElementById('again').onclick = function(){ startQuiz(BANK, 'quiz'); };
+  document.getElementById('home').onclick = renderStart;
+}
+
+renderStart();
+})();
+</script>
+<!--sh-version--><div id="sh-version" title="Tap for changelog" style="position:fixed;right:6px;bottom:4px;font:11px system-ui,sans-serif;color:#888;background:rgba(255,255,255,.75);padding:1px 6px;border-radius:6px;z-index:99999;cursor:pointer" data-log="Changelog&#10;v1.26: Chinese: removed typing English meanings; practice keeps handwriting, pinyin, multiple-choice, and English-to-Chinese prompts&#10;v1.24: Chinese: Lesson 13 Dialogue 2 vocab (问路, 26 words)&#10;v1.23: Health Nutrition Test practice rebuilt from Classroom handouts and slides — 69 specific multiple-choice questions, few calorie-math items&#10;v1.22: Health Nutrition Test practice — 38 multiple-choice questions with instant feedback for the 11/18 exam&#10;v1.21: Geometry: fixed parallelogram system questions that could be unsolvable&#10;v1.20: Geometry: Chapter 7 &amp; 8 Test Prep&#10;v1.19: Chinese: restored online app (flashcards, review, handwriting recognition) after v1.18 regression; L13 D1 kept&#10;v1.18: Chinese: Lesson 13 Dialogue 1 vocab (上哪儿, 14 words)&#10;v1.17: Accelerated Chapter 7 — quadratics with root rejection, systems, coordinate proofs and mixed transformations&#10;v1.16: Chapter 7 Challenge — 10 harder multi-step generated problems per attempt&#10;v1.15: Chapter 7 fresh procedural problems, 28 templates, shuffled choices and recent-question avoidance&#10;v1.14: Geometry Ch 7 practice (7.1–7.5 quadrilaterals &amp; polygons, 10 challenge Q with worked solutions)&#10;v1.13: Geometry Ch 5–6 test now 13 questions: added 3 two-column proofs (fill-in Statement/Reason dropdowns, per-blank partial credit); 48 pts → /40, 55 min&#10;v1.12: Geometry Ch 5–6 is now one real-format test: 10 multi-step questions (36 pts → /40), 50 min, new numbers each time, worked solutions after submit&#10;v1.11: Geometry Ch 5–6 practice test&#10;v1.10: Chinese: Lesson 12 Dialogue 2 vocab (dining hall, 22 words)&#10;v1.9: Review sheets: Living Earth Unit 3 + Geometry Ch 5–6; Ch 6.1–6.3 practice&#10;v1.8: Living Earth labs + Unit 3 practice&#10;v1.7: Chapter 5 quiz now 10 questions (40 pts)&#10;v1.6: Geometry Chapter 5 quiz (congruent triangles)&#10;v1.5: Normal round: each word once, random 英翻中/音翻中; review list = last round&#x27;s misses&#10;v1.4: Review mode: only missed words, once each&#10;v1.3: Version label on every page (tap for changelog)&#10;v1.2: Chinese: English answers accept synonyms and small typos&#10;v1.1: Chinese: words you needed help on are repeated next round&#10;v1.0: Hosted online (no names)" onclick="alert(this.dataset.log)">v1.26 · 2026-11-21 10:37 AM PT</div><!--/sh-version-->
+</body>
+</html>

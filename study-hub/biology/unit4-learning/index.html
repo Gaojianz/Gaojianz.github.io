@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unit 4 Learning · DNA, Proteins &amp; Biotechnology</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #0f172a;
+      background: #fff;
+      font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    .page { padding: 8px 4px 28px; }
+    h1 { font-size: 20px; margin: 0 0 16px; letter-spacing: -0.02em; }
+    section { margin: 0 0 22px; }
+    h2 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #047857;
+      margin: 0 0 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #d1fae5;
+    }
+    ul { list-style: none; margin: 0; padding: 0; }
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 4px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    li:last-child { border-bottom: 0; }
+    li.done .title { color: #64748b; text-decoration: line-through; }
+    input[type="checkbox"] {
+      margin: 3px 0 0;
+      width: 16px;
+      height: 16px;
+      flex: none;
+      accent-color: #047857;
+      cursor: pointer;
+    }
+    .body {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 10px;
+    }
+    .title {
+      color: #0f172a;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    a.title:hover { color: #047857; text-decoration: underline; }
+    .tag {
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: .02em;
+      color: #475569;
+      background: #f1f5f9;
+      border-radius: 999px;
+      padding: 2px 8px;
+      flex: none;
+    }
+    .tag-video { color: #9a3412; background: #fff7ed; }
+    .tag-reading { color: #1d4ed8; background: #eff6ff; }
+    .tag-interactive { color: #0f766e; background: #f0fdfa; }
+    .tag-pdf { color: #334155; background: #f1f5f9; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Unit 4: DNA, Proteins &amp; Biotechnology</h1>
+
+    <section>
+      <h2>Study guide</h2>
+      <ul>
+        <li data-id="test-study-guide">
+          <input type="checkbox" aria-label="Mark Test Study Guide done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1k6C5UIWZdfPqPUzmHBvRIt9tRZa2XyaJ/view" target="_blank" rel="noopener">Test Study Guide</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+        <li data-id="unit-4-calendar">
+          <input type="checkbox" aria-label="Mark Unit 4 Calendar done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1vC6IanPT473llRCFLLhnbeH4HSsvopcN/view" target="_blank" rel="noopener">Unit 4 Calendar</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Intro to DNA</h2>
+      <ul>
+        <li data-id="same-gene-different-organism">
+          <input type="checkbox" aria-label="Mark Same Gene, Different Organism done">
+          <div class="body">
+            <a class="title" href="https://learn.genetics.utah.edu/content/evolution/samegene/" target="_blank" rel="noopener">Same Gene, Different Organism</a>
+            <span class="tag tag-interactive">Interactive</span>
+          </div>
+        </li>
+        <li data-id="what-are-proteins">
+          <input type="checkbox" aria-label="Mark What are Proteins? done">
+          <div class="body">
+            <a class="title" href="https://learn.genetics.utah.edu/content/evolution/proteins/" target="_blank" rel="noopener">What are Proteins?</a>
+            <span class="tag tag-interactive">Interactive</span>
+          </div>
+        </li>
+        <li data-id="types-of-proteins">
+          <input type="checkbox" aria-label="Mark Types of Proteins done">
+          <div class="body">
+            <a class="title" href="https://learn.genetics.utah.edu/content/evolution/proteintypes/" target="_blank" rel="noopener">Types of Proteins</a>
+            <span class="tag tag-interactive">Interactive</span>
+          </div>
+        </li>
+        <li data-id="ck-12-central-dogma">
+          <input type="checkbox" aria-label="Mark CK-12 Central Dogma done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.1/primary/lesson/central-dogma-of-molecular-biology-bio/" target="_blank" rel="noopener">CK-12 Central Dogma</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="ck-12-dna">
+          <input type="checkbox" aria-label="Mark CK-12 DNA done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.2/primary/lesson/dna-the-genetic-material-bio/" target="_blank" rel="noopener">CK-12 DNA</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Transcription and translation</h2>
+      <ul>
+        <li data-id="what-are-dna-and-genes">
+          <input type="checkbox" aria-label="Mark What are DNA and Genes? done">
+          <div class="body">
+            <a class="title" href="https://learn.genetics.utah.edu/content/evolution/dna/" target="_blank" rel="noopener">What are DNA and Genes?</a>
+            <span class="tag tag-interactive">Interactive</span>
+          </div>
+        </li>
+        <li data-id="paired-dna-strands">
+          <input type="checkbox" aria-label="Mark Paired DNA Strands done">
+          <div class="body">
+            <a class="title" href="https://www.youtube.com/watch?v=cBn6jndiHHs" target="_blank" rel="noopener">Paired DNA Strands</a>
+            <span class="tag tag-video">Video · 1 min</span>
+          </div>
+        </li>
+        <li data-id="how-a-firefly-s-tail-makes-light">
+          <input type="checkbox" aria-label="Mark How a Firefly&#x27;s Tail Makes Light done">
+          <div class="body">
+            <a class="title" href="https://learn.genetics.utah.edu/content/evolution/firefly/" target="_blank" rel="noopener">How a Firefly&#x27;s Tail Makes Light</a>
+            <span class="tag tag-interactive">Interactive</span>
+          </div>
+        </li>
+        <li data-id="transcribe-and-translate-a-gene">
+          <input type="checkbox" aria-label="Mark Transcribe and Translate a Gene done">
+          <div class="body">
+            <a class="title" href="https://learn.genetics.utah.edu/content/evolution/txtl/" target="_blank" rel="noopener">Transcribe and Translate a Gene</a>
+            <span class="tag tag-interactive">Interactive</span>
+          </div>
+        </li>
+        <li data-id="how-to-read-a-codon-chart">
+          <input type="checkbox" aria-label="Mark How to Read a Codon Chart done">
+          <div class="body">
+            <a class="title" href="https://www.youtube.com/watch?v=LsEYgwuP6ko" target="_blank" rel="noopener">How to Read a Codon Chart</a>
+            <span class="tag tag-video">Video · 7 min</span>
+          </div>
+        </li>
+        <li data-id="codon-chart">
+          <input type="checkbox" aria-label="Mark Codon Chart done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1zsTnt7Dgdj8e5Pql8TtvO-sz9zzyFV89/view" target="_blank" rel="noopener">Codon Chart</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+        <li data-id="ck-12-transcription">
+          <input type="checkbox" aria-label="Mark CK-12 Transcription done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.5/primary/lesson/transcription-of-dna-to-rna-bio/" target="_blank" rel="noopener">CK-12 Transcription</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="ck-12-genetic-code">
+          <input type="checkbox" aria-label="Mark CK-12 Genetic Code done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.6/primary/lesson/genetic-code-bio/" target="_blank" rel="noopener">CK-12 Genetic Code</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="ck-12-translation">
+          <input type="checkbox" aria-label="Mark CK-12 Translation done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.7/primary/lesson/translation-of-rna-to-protein-bio/" target="_blank" rel="noopener">CK-12 Translation</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="transcription-and-translation-ws">
+          <input type="checkbox" aria-label="Mark Transcription and Translation WS done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1WalBpVX97Q_BJ99F1V22PCzzfOgR1PZ3/view" target="_blank" rel="noopener">Transcription and Translation WS</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+        <li data-id="optional-extra-practice-protein-synthesis-and-codons">
+          <input type="checkbox" aria-label="Mark Optional extra practice: Protein Synthesis and Codons done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1wPvA3CYjkf9e9IfyuSUeQkpu09jHx0YJ/view" target="_blank" rel="noopener">Optional extra practice: Protein Synthesis and Codons</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Mutations</h2>
+      <ul>
+        <li data-id="where-do-genes-come-from">
+          <input type="checkbox" aria-label="Mark Where do genes come from? done">
+          <div class="body">
+            <a class="title" href="https://www.youtube.com/watch?v=z9HIYjRRaDE" target="_blank" rel="noopener">Where do genes come from?</a>
+            <span class="tag tag-video">Video · 4 min</span>
+          </div>
+        </li>
+        <li data-id="video-worksheet">
+          <input type="checkbox" aria-label="Mark Video worksheet done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1EBnrh6ATBOJMAAP5jc7YINiu1Duorpsy/view" target="_blank" rel="noopener">Video worksheet</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+        <li data-id="what-is-mutation">
+          <input type="checkbox" aria-label="Mark What is Mutation? done">
+          <div class="body">
+            <a class="title" href="https://learn.genetics.utah.edu/content/evolution/mutation/" target="_blank" rel="noopener">What is Mutation?</a>
+            <span class="tag tag-interactive">Interactive</span>
+          </div>
+        </li>
+        <li data-id="ck-12-mutation">
+          <input type="checkbox" aria-label="Mark CK-12 Mutation done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.8/primary/lesson/mutation-types-bio/" target="_blank" rel="noopener">CK-12 Mutation</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="ck-12-mutation-causes">
+          <input type="checkbox" aria-label="Mark CK-12 Mutation Causes done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.9/primary/lesson/mutation-causes-bio/" target="_blank" rel="noopener">CK-12 Mutation Causes</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="ck-12-mutation-effects">
+          <input type="checkbox" aria-label="Mark CK-12 Mutation Effects done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.10/primary/lesson/mutation-effects-bio/" target="_blank" rel="noopener">CK-12 Mutation Effects</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="mutations-ws">
+          <input type="checkbox" aria-label="Mark Mutations WS done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1N0Row9qtwJEoQCG7ZF11cLZCFlIYvbCY/view" target="_blank" rel="noopener">Mutations WS</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>DNA structure and replication</h2>
+      <ul>
+        <li data-id="dna-replication-amoeba-sisters">
+          <input type="checkbox" aria-label="Mark DNA Replication (Amoeba Sisters) done">
+          <div class="body">
+            <a class="title" href="https://www.youtube.com/watch?v=Qqe4thU-os8" target="_blank" rel="noopener">DNA Replication (Amoeba Sisters)</a>
+            <span class="tag tag-video">Video · 8 min</span>
+          </div>
+        </li>
+        <li data-id="video-handout">
+          <input type="checkbox" aria-label="Mark Video handout done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1ZMRR6BFMyLQYSF6GC9JcXTAAAkr-hpoJ/view" target="_blank" rel="noopener">Video handout</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+        <li data-id="ck-12-rna">
+          <input type="checkbox" aria-label="Mark CK-12 RNA done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.4/primary/lesson/rna-bio/" target="_blank" rel="noopener">CK-12 RNA</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="ck-12-dna-structure-and-replication">
+          <input type="checkbox" aria-label="Mark CK-12 DNA Structure and Replication done">
+          <div class="body">
+            <a class="title" href="https://flexbooks.ck12.org/cbook/ck-12-biology-flexbook-2.0/section/4.3/primary/lesson/dna-structure-and-replication-bio/" target="_blank" rel="noopener">CK-12 DNA Structure and Replication</a>
+            <span class="tag tag-reading">Reading</span>
+          </div>
+        </li>
+        <li data-id="dna-coloring">
+          <input type="checkbox" aria-label="Mark DNA Coloring done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1BrSngpRIaKFoA9UaIYXaMULELra-QNhY/view" target="_blank" rel="noopener">DNA Coloring</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h2>Gene expression</h2>
+      <ul>
+        <li data-id="gene-regulation-and-the-operon">
+          <input type="checkbox" aria-label="Mark Gene Regulation and the Operon done">
+          <div class="body">
+            <a class="title" href="https://www.youtube.com/watch?v=h_1QLdtF8d0" target="_blank" rel="noopener">Gene Regulation and the Operon</a>
+            <span class="tag tag-video">Video · 6 min</span>
+          </div>
+        </li>
+        <li data-id="examining-gene-expression-ws">
+          <input type="checkbox" aria-label="Mark Examining Gene Expression WS done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/132h63XBiKIkXNMgLDm96W9LQeZXX4AX_/view" target="_blank" rel="noopener">Examining Gene Expression WS</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+        <li data-id="factors-that-affect-gene-expression-handout">
+          <input type="checkbox" aria-label="Mark Factors that Affect Gene Expression handout done">
+          <div class="body">
+            <a class="title" href="https://drive.google.com/file/d/1w5rKBkRUl3y94O8HHtfDXcvmLeWWRcD3/view" target="_blank" rel="noopener">Factors that Affect Gene Expression handout</a>
+            <span class="tag tag-pdf">PDF</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+  <script>
+    (function () {
+      const KEY = 'sh-le-u4-learn-v2';
+      function load() {
+        try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
+        catch (e) { return []; }
+      }
+      function save(ids) {
+        try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch (e) {}
+      }
+      const done = new Set(load());
+      document.querySelectorAll('li[data-id]').forEach(li => {
+        const box = li.querySelector('input[type="checkbox"]');
+        if (!box) return;
+        const id = li.dataset.id;
+        box.checked = done.has(id);
+        li.classList.toggle('done', box.checked);
+        box.addEventListener('change', () => {
+          if (box.checked) done.add(id); else done.delete(id);
+          li.classList.toggle('done', box.checked);
+          save([...done]);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

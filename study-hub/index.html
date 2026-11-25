@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Learning Hub (Preview)</title>
+  <link rel="stylesheet" href="shell.css">
+</head>
+<body>
+  <header class="sh-topbar">
+    <div class="sh-topbar-inner">
+      <div class="sh-topbar-left">
+        <button type="button" class="sh-menu-btn" id="menuBtn" aria-label="Open chapters menu">
+          ☰ <span>Chapters</span>
+        </button>
+        <a href="./" class="sh-brand" aria-label="Learning Hub">
+          <span class="sh-brand-icon" id="brandIcon">📐</span>
+          <span class="sh-brand-text">Learning Hub</span>
+        </a>
+        <span class="sh-divider" aria-hidden="true"></span>
+        <div class="sh-select-wrap">
+          <select id="subjectSelect" class="sh-subject-select" aria-label="Select subject"></select>
+          <span class="sh-select-caret" aria-hidden="true">▾</span>
+        </div>
+      </div>
+      <div class="sh-topbar-right">
+        <button type="button" class="sh-timer-pill" id="timerPill" aria-label="Open timer">
+          <span class="sh-timer-pill-icon" aria-hidden="true">⏱</span>
+          <span id="timerPillTime">15:00</span>
+        </button>
+        <span class="sh-preview-pill">Preview</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="sh-backdrop" id="backdrop"></div>
+
+  <div class="sh-layout">
+    <aside class="sh-panel sh-left" id="leftNav" aria-label="Chapters">
+      <div class="sh-left-head">
+        <span class="sh-left-title">Chapters</span>
+        <button type="button" class="sh-drawer-close" id="drawerClose" aria-label="Close chapters">✕</button>
+      </div>
+      <nav class="sh-nav-list" id="navList"></nav>
+    </aside>
+
+    <main class="sh-center">
+      <div id="contentArea"></div>
+    </main>
+
+    <aside class="sh-panel sh-right" id="rightPanel" aria-label="Timer">
+      <div class="sh-right-head">
+        <span class="sh-right-title">Timer</span>
+        <button type="button" class="sh-timer-close" id="timerClose" aria-label="Close timer">✕</button>
+      </div>
+      <div class="sh-timer" id="timerPanel">
+        <div class="sh-timer-display" id="timerDisplay" aria-live="polite">15:00</div>
+        <div class="sh-timer-status" id="timerStatus">Ready</div>
+        <div class="sh-timer-presets" id="timerPresets" role="group" aria-label="Duration">
+          <button type="button" class="sh-timer-preset" data-min="5">5</button>
+          <button type="button" class="sh-timer-preset" data-min="10">10</button>
+          <button type="button" class="sh-timer-preset on" data-min="15">15</button>
+          <button type="button" class="sh-timer-preset" data-min="20">20</button>
+          <button type="button" class="sh-timer-preset" data-min="30">30</button>
+          <button type="button" class="sh-timer-preset" data-min="45">45</button>
+          <button type="button" class="sh-timer-preset" data-min="60">60</button>
+        </div>
+        <p class="sh-timer-hint">minutes</p>
+        <div class="sh-timer-custom">
+          <label for="timerCustom">Custom</label>
+          <input id="timerCustom" type="number" min="1" max="180" inputmode="numeric" placeholder="12" aria-label="Custom minutes">
+          <span>min</span>
+        </div>
+        <div class="sh-timer-controls">
+          <button type="button" class="sh-timer-btn primary" id="timerStart">Start</button>
+          <button type="button" class="sh-timer-btn" id="timerPause" disabled>Pause</button>
+          <button type="button" class="sh-timer-btn" id="timerReset">Reset</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="shell.js"></script>
+  <!--sh-version--><div id="sh-version" title="Preview changelog" data-log="Redesign Preview&#10;v2.0.3-preview: Unit 4 Learning rebuilt from the full Classroom materials list — 33 linked items in the teacher's 6 topic sections, with type tags and done checkboxes.&#10;v2.0.2-preview: Living Earth Unit 4 Learning page — Classroom materials for DNA, Proteins &amp; Biotechnology (study guide, calendar, videos, CK-12 readings, handouts), with optional done checkboxes.&#10;v2.0.1-preview: Removed English (Grade 3) from the subject dropdown, left nav, and site files. Saved or URL values pointing at english now fall back to Geometry.&#10;v2.0-preview: Full content migration — all Geometry, Living Earth, Chinese, and Health pages integrated into the 3-column shell with left-nav sub-items and persistent right-column timer" onclick="alert(this.dataset.log)">v2.0.3-preview</div><!--/sh-version-->
+</body>
+</html>

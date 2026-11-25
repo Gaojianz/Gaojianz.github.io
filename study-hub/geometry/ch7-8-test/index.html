@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d4ed8">
+<title>Geometry Ch 7 &amp; 8 Test Prep</title>
+<link rel="stylesheet" href="../style.css">
+<style>.solution{margin-top:12px;padding:10px 12px;background:#f8fafc;border-radius:10px;border:1px solid #e5e7eb}.qcheck{margin-top:12px}a.back{color:#dbeafe;text-decoration:none;font-size:14px}.part{margin-top:10px}.inrow input{max-width:200px}.focus{display:inline-block;font-size:12px;font-weight:700;background:#fef3c7;color:#92400e;border-radius:6px;padding:2px 8px}.solution table.proof{margin-top:6px}code{background:#f1f5f9;border-radius:4px;padding:0 4px}</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="badge">7–8</span><div><h1>Ch 7 &amp; 8 Test Prep</h1><p class="sub">Quadrilaterals &amp; Polygons + Similarity · Test Tue 11/17 · <a class="back" href="../">‹ Geometry</a> · <a class="back" href="../../">Hub</a></p></div></div>
+</header>
+<div id="bar" class="bar"><span id="progress"></span><button id="reset" class="btn small">New attempt</button></div>
+<main id="app"></main>
+<script src="gen78.js"></script>
+<script>
+(function(){
+const KEY='geo78-attempt-v1',app=document.getElementById('app');
+let st=null;try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!st||!st.qs||st.qs.length!==10)st={qs:Geo78.generate(),ans:{},done:{},t:Date.now()};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};save();
+const clean=v=>String(v==null?'':v).trim().replace(/[\u2212\u2013\u2014]/g,'-').replace(/°/g,'').replace(/\s+/g,'');
+function num(v){v=clean(v);if(/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(v)){const[a,b]=v.split('/');return +a/ +b}if(v===''||!/^-?(\d+\.?\d*|\.\d+)$/.test(v))return NaN;return +v}
+function ptv(v){v=clean(v).replace(/^\(|\)$/g,'');const p=v.split(/[,;]/);return p.length===2?[num(p[0]),num(p[1])]:[NaN,NaN]}
+const near=(a,b)=>Math.abs(a-b)<1e-6||(Math.abs(b)>1e-9&&Math.abs(a-b)<0.006&&!Number.isInteger(b));
+function ok(p,v){if(p.t==='mc')return v===p.a;if(p.t==='pt'){const q=ptv(v);return near(q[0],p.a[0])&&near(q[1],p.a[1])}return near(num(v),p.a)}
+const fr=v=>{if(Number.isInteger(v))return String(v).replace('-','−');for(let d=2;d<=200;d++){const n=Math.round(v*d);if(Math.abs(n/d-v)<1e-9)return (n<0?'−':'')+Math.abs(n)+'/'+d}return String(+v.toFixed(3))};
+const show=p=>p.t==='pt'?'('+fr(p.a[0])+', '+fr(p.a[1])+')':p.t==='mc'?p.c[p.a]:fr(p.a);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+function render(){
+ const Q=st.qs,nd=Object.keys(st.done).length;let tot=0,max=0;const miss={},topic={};
+ let h='';
+ Q.forEach((q,qi)=>{const done=!!st.done[qi];let got=0;
+  if(done){q.parts.forEach((p,pi)=>{if(ok(p,st.ans[qi+'-'+pi]))got++});tot+=got;max+=q.parts.length;topic[q.s]=topic[q.s]||[0,0];topic[q.s][0]+=got;topic[q.s][1]+=q.parts.length;if(got<q.parts.length)miss[q.s]=(miss[q.s]||0)+q.parts.length-got}
+  const n=q.parts.length,focus=q.w?' <span class="focus">focus</span>':'';
+  h+='<article class="card q'+(done?(got===n?' got':got===0?' miss':' partial'):'')+'"><div class="qhead"><span class="qnum">'+(qi+1)+'.</span><span class="sec">'+q.s+'</span>'+focus+(done?'<span class="mark '+(got===n?'ok':got?'part':'bad')+'">'+got+'/'+n+'</span>':'<span class="pts">'+n+' pts</span>')+'</div><div class="prompt">'+q.p+'</div>';
+  q.parts.forEach((p,pi)=>{const k=qi+'-'+pi,v=st.ans[k];h+='<div class="part"><div class="plabel">'+p.l+'</div>';
+   if(p.t==='mc'){h+='<div class="choices">'+p.c.map((c,ci)=>{let cl='choice'+(v===ci?' sel':'');if(done){if(ci===p.a)cl+=' right';else if(v===ci)cl+=' wrong'}return '<button type="button" class="'+cl+'" data-k="'+k+'" data-c="'+ci+'"'+(done?' disabled':'')+'><span class="dotc"></span><span>'+c+'</span></button>'}).join('')+'</div>'}
+   else h+='<div class="inrow"><input type="text" autocomplete="off" autocapitalize="off" data-k="'+k+'" value="'+esc(v)+'" placeholder="'+(p.t==='pt'?'x, y':'Number')+'"'+(done?' disabled':'')+'></div>';
+   if(done)h+='<div class="result '+(ok(p,v)?'ok':'bad')+'">'+(ok(p,v)?'✓ Correct':'✗ Correct answer: <b>'+show(p)+'</b>')+'</div>';
+   h+='</div>'});
+  h+=done?'<div class="solution"><b>Worked solution</b><ol class="steps">'+q.e.map(s=>'<li>'+s+'</li>').join('')+'</ol></div>':'<button class="btn primary qcheck" data-check="'+qi+'">Check question '+(qi+1)+'</button>';
+  h+='</article>'});
+ if(nd===Q.length){const ms=Object.keys(miss);const pct=Math.round(tot*100/max);
+  h+='<div class="card score"><div class="big">'+tot+' / '+max+'</div><div class="pct">'+pct+'% · ≈ '+Math.round(pct*0.4)+' / 40</div><p class="msg">'+(ms.length?'Topics to review before Tuesday:':'Perfect score! 🎉')+'</p><div class="secs">'+Object.keys(topic).map(s=>{const t=topic[s];return '<span class="'+(t[0]===t[1]?'full':t[0]?'some':'none')+'">'+s+' '+t[0]+'/'+t[1]+'</span>'}).join('')+'</div>'+(ms.length?'<ul style="text-align:left">'+ms.map(s=>'<li><b>'+s+'</b> — missed '+miss[s]+' part'+(miss[s]>1?'s':'')+'</li>').join('')+'</ul>':'')+'<button class="btn primary big" id="again">New attempt (new questions)</button></div>'}
+ app.innerHTML=h;document.getElementById('progress').textContent='Ch 7–8 Test Prep · '+nd+' / '+Q.length+' checked';
+ app.querySelectorAll('input[data-k]').forEach(i=>i.oninput=()=>{st.ans[i.dataset.k]=i.value;save()});
+ app.querySelectorAll('button[data-c]').forEach(b=>b.onclick=()=>{st.ans[b.dataset.k]=+b.dataset.c;save();b.parentNode.querySelectorAll('.choice').forEach(x=>x.classList.toggle('sel',x===b))});
+ app.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>{st.done[b.dataset.check]=1;save();const y=scrollY;render();scrollTo(0,y)});
+ const ag=document.getElementById('again');if(ag)ag.onclick=fresh;
+}
+function fresh(){st={qs:Geo78.generate(),ans:{},done:{},t:Date.now()};save();render();scrollTo(0,0)}
+document.getElementById('reset').onclick=()=>{if(confirm('Start a fresh attempt with new questions?'))fresh()};
+render();
+})();
+</script>
+<!--sh-version--><div id="sh-version" title="Tap for changelog" style="position:fixed;right:6px;bottom:4px;font:11px system-ui,sans-serif;color:#888;background:rgba(255,255,255,.75);padding:1px 6px;border-radius:6px;z-index:99999;cursor:pointer" data-log="Changelog&#10;v1.21: Geometry: fixed parallelogram system questions that could be unsolvable&#10;v1.20: Geometry: Chapter 7 &amp; 8 Test Prep&#10;v1.19: Chinese: restored online app (flashcards, review, handwriting recognition) after v1.18 regression; L13 D1 kept&#10;v1.18: Chinese: Lesson 13 Dialogue 1 vocab (上哪儿, 14 words)&#10;v1.17: Accelerated Chapter 7 — quadratics with root rejection, systems, coordinate proofs and mixed transformations&#10;v1.16: Chapter 7 Challenge — 10 harder multi-step generated problems per attempt&#10;v1.15: Chapter 7 fresh procedural problems, 28 templates, shuffled choices and recent-question avoidance&#10;v1.14: Geometry Ch 7 practice (7.1–7.5 quadrilaterals &amp; polygons, 10 challenge Q with worked solutions)&#10;v1.13: Geometry Ch 5–6 test now 13 questions: added 3 two-column proofs (fill-in Statement/Reason dropdowns, per-blank partial credit); 48 pts → /40, 55 min&#10;v1.12: Geometry Ch 5–6 is now one real-format test: 10 multi-step questions (36 pts → /40), 50 min, new numbers each time, worked solutions after submit&#10;v1.11: Geometry Ch 5–6 practice test&#10;v1.10: Chinese: Lesson 12 Dialogue 2 vocab (dining hall, 22 words)&#10;v1.9: Review sheets: Living Earth Unit 3 + Geometry Ch 5–6; Ch 6.1–6.3 practice&#10;v1.8: Living Earth labs + Unit 3 practice&#10;v1.7: Chapter 5 quiz now 10 questions (40 pts)&#10;v1.6: Geometry Chapter 5 quiz (congruent triangles)&#10;v1.5: Normal round: each word once, random 英翻中/音翻中; review list = last round&#x27;s misses&#10;v1.4: Review mode: only missed words, once each&#10;v1.3: Version label on every page (tap for changelog)&#10;v1.2: Chinese: English answers accept synonyms and small typos&#10;v1.1: Chinese: words you needed help on are repeated next round&#10;v1.0: Hosted online (no names)" onclick="alert(this.dataset.log)">v1.21 · 2026-11-14 12:43 PT</div><!--/sh-version-->
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d4ed8">
+<title>Geometry Ch 9 Practice Test · Right Triangles &amp; Trigonometry</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.solution{margin-top:12px;padding:10px 12px;background:#f8fafc;border-radius:10px;border:1px solid #e5e7eb}
+.qcheck{margin-top:12px}
+a.back{color:#dbeafe;text-decoration:none;font-size:14px}
+.part{margin-top:10px}
+.inrow input{max-width:220px}
+.sec.bonus{background:#fef3c7;color:#92400e}
+.card.bonusq{border:2px solid #f59e0b}
+.bonushead{background:#fffbeb;border:2px solid #f59e0b;border-radius:14px;padding:14px 16px;margin:22px 0 14px}
+.bonushead h2{margin:0 0 4px;font-size:18px;color:#92400e}
+code{background:#f1f5f9;border-radius:4px;padding:0 4px}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.toc a{font-size:13px;font-weight:700;text-decoration:none;background:#eff6ff;color:#1d4ed8;border-radius:999px;padding:4px 10px}
+.note{font-size:14.5px;color:#374151}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="badge">9</span><div>
+    <h1>Ch 9 Practice Test</h1>
+    <p class="sub">Right Triangles &amp; Trigonometry · 9.1–9.6 · test early December · <a class="back" href="../">‹ Geometry</a> · <a class="back" href="../../">Hub</a></p>
+  </div></div>
+</header>
+<div id="bar" class="bar"><span id="progress"></span><button id="reset" class="btn small">Reset answers</button></div>
+<main id="app"></main>
+<script src="ch9.js"></script>
+<script>
+(function(){
+const ALL=window.CH9, KEY='geo9-attempt-v1', app=document.getElementById('app');
+const MAIN=ALL.filter(q=>!q.bonus), BONUS=ALL.filter(q=>q.bonus);
+function freshState(){
+  return {ans:{}, done:{}, t:Date.now()};
+}
+let st=null; try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!st||typeof st!=='object') st=freshState();
+st.ans=st.ans||{}; st.done=st.done||{};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+
+function cleanStr(v){
+  return String(v==null?'':v).trim()
+    .replace(/[\u2212\u2013\u2014]/g,'-')
+    .replace(/°/g,'')
+    .replace(/,/g,'');
+}
+function num(v){
+  v=cleanStr(v);
+  const mix=v.match(/^(-?\d+)\s+(\d+)\s*\/\s*(\d+)$/);
+  if(mix){const den=+mix[3]; if(!den) return NaN; const whole=+mix[1]; return whole + Math.sign(whole||1)*(+mix[2])/den;}
+  v=v.replace(/\s+/g,'');
+  if(/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(v)){const[a,b]=v.split('/'); if(+b===0)return NaN; return +a/+b;}
+  if(v===''||!/^-?(\d+\.?\d*|\.\d+)$/.test(v)) return NaN;
+  return +v;
+}
+function near(a,b){
+  if(!isFinite(a)||!isFinite(b)) return false;
+  const tol=Math.max(0.1, 0.01*Math.abs(b));
+  return Math.abs(a-b)<=tol+1e-12;
+}
+function ok(p,v){
+  if(p.t==='mc') return v===p.a;
+  return near(num(v), p.a);
+}
+function show(p){ return p.show!=null?p.show:(p.t==='mc'?p.c[p.a]:String(p.a)); }
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+
+function render(){
+  const Qs=ALL;
+  let mainGot=0, mainMax=0, bonusGot=0, bonusMax=0, mainDone=0, mainN=MAIN.length;
+  const topic={}, miss={};
+  const checkedMain=MAIN.filter((_,i)=>st.done[i]); // wait, done keys are by ALL index
+
+  let h='';
+
+  let lastSec='', secId=0;
+  Qs.forEach((q,qi)=>{
+    if(q.s!==lastSec){
+      lastSec=q.s; secId++;
+      if(q.bonus){
+        h+='<div class="bonushead" id="sec-bonus"><h2>Optional bonus · Section 9.7</h2><p class="note" style="margin:0">Law of Sines and Law of Cosines. Your class assignment is 9.1–9.6, so these three questions are extra practice only and <b>do not count</b> toward the main score.</p></div>';
+      } else {
+        const ids={1:'sec-1',2:'sec-2',3:'sec-3',4:'sec-4',5:'sec-5',6:'sec-6'};
+        // map by section number in the label
+        const m=q.s.match(/^9\.(\d)/);
+        const id=m?'sec-'+m[1]:'sec-x';
+        h+='<div id="'+id+'"></div>';
+      }
+    }
+    const done=!!st.done[qi];
+    const n=q.parts.length;
+    let got=0;
+    if(done){
+      q.parts.forEach((p,pi)=>{ if(ok(p, st.ans[qi+'-'+pi])) got++; });
+      if(q.bonus){ bonusGot+=got; bonusMax+=n; }
+      else { mainGot+=got; mainMax+=n; topic[q.s]=topic[q.s]||[0,0]; topic[q.s][0]+=got; topic[q.s][1]+=n; if(got<n) miss[q.s]=(miss[q.s]||0)+(n-got); }
+    }
+    if(!q.bonus && done) mainDone++;
+
+    const mark=done?'<span class="mark '+(got===n?'ok':got?'part':'bad')+'">'+got+'/'+n+'</span>':'<span class="pts">'+n+' pt'+(n>1?'s':'')+'</span>';
+    const secClass=q.bonus?'sec bonus':'sec';
+    h+='<article class="card q'+(q.bonus?' bonusq':'')+(done?(got===n?' got':got===0?' miss':' partial'):'')+'" id="q'+(qi+1)+'">';
+    h+='<div class="qhead"><span class="qnum">'+(qi+1)+'.</span><span class="'+secClass+'">'+q.s+'</span>'+mark+'</div>';
+    h+='<div class="prompt">'+q.p+'</div>';
+    if(q.svg) h+=q.svg;
+    q.parts.forEach((p,pi)=>{
+      const k=qi+'-'+pi, v=st.ans[k];
+      h+='<div class="part"><div class="plabel">'+p.l+'</div>';
+      if(p.t==='mc'){
+        h+='<div class="choices">'+p.c.map((c,ci)=>{
+          let cl='choice'+(v===ci?' sel':'');
+          if(done){ if(ci===p.a) cl+=' right'; else if(v===ci) cl+=' wrong'; }
+          return '<button type="button" class="'+cl+'" data-k="'+k+'" data-c="'+ci+'"'+(done?' disabled':'')+'><span class="dotc"></span><span>'+c+'</span></button>';
+        }).join('')+'</div>';
+      } else {
+        h+='<div class="inrow"><input type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" data-k="'+k+'" value="'+esc(v)+'" placeholder="Number" '+(done?'disabled':'')+'></div>';
+      }
+      if(done) h+='<div class="result '+(ok(p,v)?'ok':'bad')+'">'+(ok(p,v)?'✓ Correct':'✗ Correct answer: <b>'+show(p)+'</b>')+'</div>';
+      h+='</div>';
+    });
+    h+=done?'<div class="solution"><b>Worked solution</b><ol class="steps">'+q.e.map(s=>'<li>'+s+'</li>').join('')+'</ol></div>':'<button class="btn primary qcheck" data-check="'+qi+'">Check question '+(qi+1)+'</button>';
+    h+='</article>';
+  });
+
+  const allMainChecked = MAIN.every((_,i)=>st.done[i]); // MAIN indices are 0..37, and they are the first 38 of ALL
+  // Confirm MAIN is a prefix of ALL
+  if(allMainChecked){
+    const pct=mainMax?Math.round(mainGot*1000/mainMax)/10:0;
+    const ms=Object.keys(miss);
+    h+='<div class="card score" id="score"><div class="big">'+mainGot+' / '+mainMax+'</div>';
+    h+='<div class="pct">'+pct+'% on 9.1–9.6</div>';
+    h+='<p class="msg">'+(ms.length?'Sections to review before the Chapter 9 test:':'Perfect score on 9.1–9.6! 🎉')+'</p>';
+    h+='<div class="secs">'+Object.keys(topic).map(s=>{const t=topic[s]; return '<span class="'+(t[0]===t[1]?'full':t[0]?'some':'none')+'">'+s+' '+t[0]+'/'+t[1]+'</span>'}).join('')+'</div>';
+    if(ms.length){
+      h+='<ul style="text-align:left">'+ms.map(s=>{
+        const first=ALL.findIndex((q,i)=>q.s===s && st.done[i] && q.parts.some((p,pi)=>!ok(p,st.ans[i+'-'+pi])));
+        const href=first>=0?'#q'+(first+1):'#sec-1';
+        return '<li><b>'+s+'</b> — missed '+miss[s]+' part'+(miss[s]>1?'s':'')+' · <a href="'+href+'">jump to first miss</a></li>';
+      }).join('')+'</ul>';
+    }
+    const bonusChecked=BONUS.filter((_,i)=>st.done[MAIN.length+i]);
+    if(bonusChecked.length){
+      h+='<p class="note">Bonus 9.7: <b>'+bonusGot+' / '+bonusMax+'</b> (not included in the main score).</p>';
+    } else {
+      h+='<p class="note">Bonus 9.7 is optional and is not included in this score. <a href="#sec-bonus">Try the three bonus questions</a> if you want a preview of the Law of Sines and Cosines.</p>';
+    }
+    h+='<button class="btn primary big" id="again">Reset and try again</button></div>';
+  }
+
+  app.innerHTML=h;
+  const nChecked=Object.keys(st.done).filter(k=>+k<MAIN.length).length;
+  document.getElementById('progress').textContent='Ch 9 Practice · '+nChecked+' / '+MAIN.length+' main checked';
+
+  app.querySelectorAll('input[data-k]').forEach(i=>i.oninput=()=>{st.ans[i.dataset.k]=i.value;save()});
+  app.querySelectorAll('button[data-c]').forEach(b=>b.onclick=()=>{st.ans[b.dataset.k]=+b.dataset.c;save();b.parentNode.querySelectorAll('.choice').forEach(x=>x.classList.toggle('sel',x===b))});
+  app.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>{
+    const qi=+b.dataset.check;
+    // require an answer on each part before checking? Allow check with blanks (they'll be marked wrong).
+    st.done[qi]=1; save();
+    const y=scrollY; render(); scrollTo(0,y);
+    if(MAIN.every((_,i)=>st.done[i])){
+      const el=document.getElementById('score'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+  const ag=document.getElementById('again'); if(ag) ag.onclick=reset;
+}
+
+function reset(){
+  if(!confirm('Clear all answers and start over? The questions stay the same.')) return;
+  st=freshState(); save(); render(); scrollTo(0,0);
+}
+document.getElementById('reset').onclick=reset;
+render();
+})();
+</script>
+<!--sh-version--><div id="sh-version" title="Tap for changelog" style="position:fixed;right:6px;bottom:4px;font:11px system-ui,sans-serif;color:#888;background:rgba(255,255,255,.75);padding:1px 6px;border-radius:6px;z-index:99999;cursor:pointer" data-log="Changelog&#10;v1.25: Geometry: Chapter 9 practice test — Right Triangles and Trigonometry (9.1–9.6, 38 questions + 3 optional 9.7 Law of Sines/Cosines bonus)&#10;v1.24: Chinese: Lesson 13 Dialogue 2 vocab (问路, 26 words)&#10;v1.23: Health Nutrition Test practice rebuilt from Classroom handouts and slides — 69 specific multiple-choice questions, few calorie-math items&#10;v1.22: Health Nutrition Test practice — 38 multiple-choice questions with instant feedback for the 11/18 exam&#10;v1.21: Geometry: fixed parallelogram system questions that could be unsolvable&#10;v1.20: Geometry: Chapter 7 &amp; 8 Test Prep&#10;v1.19: Chinese: restored online app (flashcards, review, handwriting recognition) after v1.18 regression; L13 D1 kept&#10;v1.18: Chinese: Lesson 13 Dialogue 1 vocab (上哪儿, 14 words)&#10;v1.17: Accelerated Chapter 7 — quadratics with root rejection, systems, coordinate proofs and mixed transformations&#10;v1.16: Chapter 7 Challenge — 10 harder multi-step generated problems per attempt&#10;v1.15: Chapter 7 fresh procedural problems, 28 templates, shuffled choices and recent-question avoidance&#10;v1.14: Geometry Ch 7 practice (7.1–7.5 quadrilaterals &amp; polygons, 10 challenge Q with worked solutions)&#10;v1.13: Geometry Ch 5–6 test now 13 questions: added 3 two-column proofs (fill-in Statement/Reason dropdowns, per-blank partial credit); 48 pts → /40, 55 min&#10;v1.12: Geometry Ch 5–6 is now one real-format test: 10 multi-step questions (36 pts → /40), 50 min, new numbers each time, worked solutions after submit&#10;v1.11: Geometry Ch 5–6 practice test&#10;v1.10: Chinese: Lesson 12 Dialogue 2 vocab (dining hall, 22 words)&#10;v1.9: Review sheets: Living Earth Unit 3 + Geometry Ch 5–6; Ch 6.1–6.3 practice&#10;v1.8: Living Earth labs + Unit 3 practice&#10;v1.7: Chapter 5 quiz now 10 questions (40 pts)&#10;v1.6: Geometry Chapter 5 quiz (congruent triangles)&#10;v1.5: Normal round: each word once, random 英翻中/音翻中; review list = last round&#x27;s misses&#10;v1.4: Review mode: only missed words, once each&#10;v1.3: Version label on every page (tap for changelog)&#10;v1.2: Chinese: English answers accept synonyms and small typos&#10;v1.1: Chinese: words you needed help on are repeated next round&#10;v1.0: Hosted online (no names)" onclick="alert(this.dataset.log)">v1.25 · 2026-11-20 1:47 PM PT</div><!--/sh-version-->
+</body>
+</html>

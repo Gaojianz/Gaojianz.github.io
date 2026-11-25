@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d4ed8">
+<title>Geometry Ch 7 Challenge · Quadrilaterals</title>
+<link rel="stylesheet" href="../style.css">
+<style>.solution{margin-top:12px;padding:10px 12px;background:#f8fafc;border-radius:10px;border:1px solid #e5e7eb}.qcheck{margin-top:12px}a.back{color:#dbeafe;text-decoration:none;font-size:14px}.part{margin-top:8px}.inrow input{max-width:160px}.secs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="badge">7</span><div><h1>Geometry Ch 7 Challenge</h1><p class="sub">Quadrilaterals &amp; Other Polygons · 7.1–7.5 · Quiz 11/5 · <a class="back" href="../ch7-8-test/">🎯 Ch 7–8 Test Prep</a> · <a class="back" href="../">‹ Geometry</a> · <a class="back" href="../../">Hub</a></p></div></div>
+</header>
+<div id="bar" class="bar"><span id="progress"></span><button id="reset" class="btn small">New attempt</button></div>
+<main id="app"></main>
+<script src="ch7.js"></script>
+<script>
+(function(){
+const Q=window.CH7,KEY='geo7-state-v2',app=document.getElementById('app');
+let st={ans:{},done:{}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const parse=v=>{v=String(v||'').trim().replace(/[\u2212\u2013]/g,'-').replace(/°/g,'');if(/^-?\d+\s*\/\s*\d+$/.test(v)){const[a,b]=v.split('/');return +a/ +b}return v===''?NaN:+v};
+const ok=(q,qi,pi)=>pi<0?st.ans[qi+'-mc']===q.a:pi===99?st.ans[qi+'-mc2']===q.a2:Math.abs(parse(st.ans[qi+'-'+pi])-q.parts[pi][1])<1e-6;
+const keys=q=>(q.parts||[]).map((_,i)=>i).concat(q.mc?[-1]:[]).concat(q.mc2?[99]:[]);
+function mcHTML(qi,choices,ans,k,done){const v=st.ans[qi+'-'+k];return '<div class="choices">'+choices.map((c,ci)=>{let cl='choice'+(v===ci?' sel':'');if(done){if(ci===ans)cl+=' right';else if(v===ci)cl+=' wrong'}return '<button type="button" class="'+cl+'" data-k="'+qi+'-'+k+'" data-c="'+ci+'"'+(done?' disabled':'')+'><span class="dotc"></span><span>'+c+'</span></button>'}).join('')+'</div>'}
+function render(){
+ const nd=Object.keys(st.done).length;let tot=0,max=0;const miss={};
+ let h='';
+ Q.forEach((q,qi)=>{const done=!!st.done[qi],ks=keys(q);let got=0;if(done){ks.forEach(k=>{if(ok(q,qi,k))got++;else miss[q.s]=(miss[q.s]||0)+1});tot+=got;max+=ks.length}
+  h+='<article class="card q'+(done?(got===ks.length?' got':got===0?' miss':' partial'):'')+'"><div class="qhead"><span class="qnum">'+(qi+1)+'.</span><span class="sec">'+q.s+'</span>'+(done?'<span class="mark '+(got===ks.length?'ok':got?'part':'bad')+'">'+got+'/'+ks.length+'</span>':'')+'</div><div class="prompt">'+q.p+'</div>';
+  (q.parts||[]).forEach((p,pi)=>{const v=st.ans[qi+'-'+pi];h+='<div class="part"><div class="plabel">'+p[0]+'</div><div class="inrow"><input type="text" inputmode="text" autocomplete="off" data-k="'+qi+'-'+pi+'" value="'+String(v||'').replace(/"/g,'&quot;')+'" placeholder="Number"'+(done?' disabled':'')+'></div>'+(done?'<div class="result '+(ok(q,qi,pi)?'ok':'bad')+'">'+(ok(q,qi,pi)?'✓ Correct':'✗ Correct answer: <b>'+p[1]+'</b>')+'</div>':'')+'</div>'});
+  if(q.mc)h+=mcHTML(qi,q.mc,q.a,'mc',done);
+  if(q.mc2)h+='<div class="part"><div class="plabel">Diagonals perpendicular?</div>'+mcHTML(qi,q.mc2,q.a2,'mc2',done)+'</div>';
+  h+=done?'<div class="solution"><b>Worked solution</b><ol class="steps">'+q.e.map(s=>'<li>'+s+'</li>').join('')+'</ol></div>':'<button class="btn primary qcheck" data-check="'+qi+'">Check question '+(qi+1)+'</button>';
+  h+='</article>'});
+ if(nd===Q.length){const ms=Object.keys(miss);h+='<div class="card"><h2>Score: '+tot+' / '+max+' ('+Math.round(tot*100/max)+'%)</h2>'+(ms.length?'<b>Review these sections:</b><ul>'+ms.map(s=>'<li>'+s+' — missed '+miss[s]+'</li>').join('')+'</ul>':'<p>Perfect score! 🎉</p>')+'</div>'}
+ app.innerHTML=h;document.getElementById('progress').textContent='Ch 7 Practice · '+nd+' / '+Q.length+' checked';
+ app.querySelectorAll('input[data-k]').forEach(i=>i.oninput=()=>{st.ans[i.dataset.k]=i.value;save()});
+ app.querySelectorAll('button[data-c]').forEach(b=>b.onclick=()=>{st.ans[b.dataset.k]=+b.dataset.c;save();b.parentNode.querySelectorAll('.choice').forEach(x=>x.classList.toggle('sel',x===b))});
+ app.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>{st.done[b.dataset.check]=1;save();const y=scrollY;render();scrollTo(0,y)});
+}
+document.getElementById('reset').onclick=()=>{if(confirm('Start a fresh attempt with new problems?')){location.reload()}};
+render();
+})();
+</script>
+<!--sh-version--><div id="sh-version" title="Tap for changelog" style="position:fixed;right:6px;bottom:4px;font:11px system-ui,sans-serif;color:#888;background:rgba(255,255,255,.75);padding:1px 6px;border-radius:6px;z-index:99999;cursor:pointer" data-log="Changelog&#10;v1.21: Geometry: fixed parallelogram system questions that could be unsolvable&#10;v1.20: Geometry: Chapter 7 &amp; 8 Test Prep&#10;v1.19: Chinese: restored online app (flashcards, review, handwriting recognition) after v1.18 regression; L13 D1 kept&#10;v1.18: Chinese: Lesson 13 Dialogue 1 vocab (上哪儿, 14 words)&#10;v1.17: Accelerated Chapter 7 — quadratics with root rejection, systems, coordinate proofs and mixed transformations&#10;v1.16: Chapter 7 Challenge — 10 harder multi-step generated problems per attempt&#10;v1.15: Chapter 7 fresh procedural problems, 28 templates, shuffled choices and recent-question avoidance&#10;v1.14: Geometry Ch 7 practice (7.1–7.5 quadrilaterals &amp; polygons, 10 challenge Q with worked solutions)&#10;v1.13: Geometry Ch 5–6 test now 13 questions: added 3 two-column proofs (fill-in Statement/Reason dropdowns, per-blank partial credit); 48 pts → /40, 55 min&#10;v1.12: Geometry Ch 5–6 is now one real-format test: 10 multi-step questions (36 pts → /40), 50 min, new numbers each time, worked solutions after submit&#10;v1.11: Geometry Ch 5–6 practice test&#10;v1.10: Chinese: Lesson 12 Dialogue 2 vocab (dining hall, 22 words)&#10;v1.9: Review sheets: Living Earth Unit 3 + Geometry Ch 5–6; Ch 6.1–6.3 practice&#10;v1.8: Living Earth labs + Unit 3 practice&#10;v1.7: Chapter 5 quiz now 10 questions (40 pts)&#10;v1.6: Geometry Chapter 5 quiz (congruent triangles)&#10;v1.5: Normal round: each word once, random 英翻中/音翻中; review list = last round&#x27;s misses&#10;v1.4: Review mode: only missed words, once each&#10;v1.3: Version label on every page (tap for changelog)&#10;v1.2: Chinese: English answers accept synonyms and small typos&#10;v1.1: Chinese: words you needed help on are repeated next round&#10;v1.0: Hosted online (no names)" onclick="alert(this.dataset.log)">v1.21 · 2026-11-14 12:43 PT</div><!--/sh-version--></body>
+</html>

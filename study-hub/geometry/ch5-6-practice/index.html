@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d4ed8">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<title>Geometry Ch 5–6 Test</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;color:#0f172a;background:#eff6ff;-webkit-text-size-adjust:100%;line-height:1.45}
+.top{background:linear-gradient(135deg,#1d4ed8,#1e3a8a);color:#fff;padding:max(14px,env(safe-area-inset-top)) 16px 16px}
+.wrap{max-width:820px;margin:0 auto}
+.top h1{margin:0;font-size:clamp(20px,4.5vw,28px)}
+.top p{margin:2px 0 0;color:#bfdbfe;font-size:14px}
+.back{display:inline-block;color:#dbeafe;text-decoration:none;font-weight:600;font-size:15px;margin-bottom:6px}
+main{padding:16px 14px 70px}
+.card{background:#fff;border:1px solid #dbeafe;border-radius:16px;padding:16px;box-shadow:0 2px 0 #dbeafe,0 6px 18px rgba(30,64,175,.08);margin-bottom:14px}
+.tag{display:inline-block;background:#dbeafe;color:#1e3a8a;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;margin-bottom:8px}
+.qn{font-weight:700;color:#475569;font-size:14px;margin-bottom:2px}
+.q{font-size:18px;margin:6px 0 12px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:700;min-height:46px}
+.pri{background:#1d4ed8;color:#fff}.pri:active{background:#1e3a8a}
+.sec{background:#e0e7ff;color:#1e3a8a}
+.warn{background:#fef3c7;color:#92400e}
+.ghost{background:#fff;border:1px solid #cbd5e1;color:#334155}
+button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+input.ans{font:inherit;font-size:20px;padding:11px 12px;border:2px solid #93c5fd;border-radius:12px;width:170px;max-width:60%}
+input.ans:focus{outline:none;border-color:#1d4ed8}
+.unit{font-size:18px;color:#475569;margin-left:6px}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid #cbd5e1;color:#0f172a;margin:8px 0;font-weight:500;font-size:17px;padding:12px 14px;border-radius:12px}
+.opt.sel{border-color:#1d4ed8;background:#dbeafe}
+.opt.ok{border-color:#16a34a;background:#dcfce7}
+.opt.bad{border-color:#dc2626;background:#fee2e2}
+.fb{margin-top:12px;padding:10px 12px;border-radius:12px;font-weight:600}
+.fb.ok{background:#dcfce7;color:#166534}.fb.bad{background:#fee2e2;color:#991b1b}.fb.info{background:#e0f2fe;color:#075985}
+.hint{background:#fffbeb;border-left:5px solid #f59e0b;padding:9px 12px;border-radius:8px;margin-top:10px;font-size:16px}
+.sol{background:#f0fdf4;border-left:5px solid #16a34a;padding:9px 12px;border-radius:8px;margin-top:10px;font-size:16px}
+svg.dg{display:block;width:100%;max-width:340px;margin:6px auto 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px}
+svg.dg line,svg.dg polygon,svg.dg circle{stroke:#1e3a8a;stroke-width:2;fill:none}
+svg.dg .dsh{stroke:#dc2626;stroke-dasharray:5 4;fill:none}
+svg.dg .pt{fill:#dc2626;stroke:#dc2626}
+svg.dg .grid line{stroke:#cbd5e1;stroke-width:1}
+svg.dg text{font-size:14px;fill:#0f172a;font-weight:600}
+svg.dg text.sm{font-size:12px;fill:#b91c1c}
+.bar{height:12px;background:#e2e8f0;border-radius:999px;overflow:hidden;min-width:80px}
+.bar i{display:block;height:100%;background:#16a34a}
+.bar i.lo{background:#dc2626}.bar i.mid{background:#f59e0b}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{padding:8px 6px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:middle}
+.timer{position:sticky;top:0;z-index:5;background:#1e3a8a;color:#fff;padding:8px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.timer.low{background:#b91c1c}
+.pal{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.pal button{min-height:38px;width:42px;padding:0;background:#e2e8f0;color:#0f172a;border-radius:10px}
+.pal button.done{background:#bfdbfe}.pal button.cur{outline:3px solid #1d4ed8}
+.big{font-size:44px;font-weight:800;color:#1d4ed8}
+.prog{height:8px;background:#dbeafe;border-radius:999px;overflow:hidden;margin-bottom:12px}.prog i{display:block;height:100%;background:#1d4ed8}
+.chk{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:15px}.chk input{margin-top:4px;width:18px;height:18px}
+small.m{color:#64748b}
+@media print{.timer,.row,.pal{display:none}}
+
+.sp{margin:6px 0}
+ol.steps{padding-left:20px;margin:6px 0}ol.steps li{margin:6px 0}
+.part{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0}
+.part label{font-weight:700;min-width:120px}
+.part input.ans{width:150px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;border:2px solid #cbd5e1;color:#0f172a;font-weight:600;padding:8px 12px;min-height:42px;border-radius:12px;font-size:16px}
+.chip.sel{border-color:#1d4ed8;background:#dbeafe}
+textarea.work{width:100%;min-height:86px;font:inherit;font-size:16px;border:2px dashed #93c5fd;border-radius:12px;padding:10px;background:#f8fbff;margin-top:6px}
+.qh{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:4px}
+.pts{background:#fef3c7;color:#92400e;font-weight:800;border-radius:999px;padding:2px 10px;font-size:13px;white-space:nowrap}
+.rv td:first-child{font-weight:700}
+.good{color:#166534;font-weight:800}.badc{color:#991b1b;font-weight:800}
+.wk{background:#fff7ed;border-left:5px solid #f97316;padding:8px 12px;border-radius:8px;margin:6px 0}
+svg.dg .mk{stroke:#dc2626;stroke-width:1.8;fill:none}
+table.pf{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}
+table.pf th{background:#e0e7ff;color:#1e3a8a;text-align:left;padding:7px 6px;font-size:14px}
+table.pf td{padding:7px 6px;border:1px solid #cbd5e1;vertical-align:middle}
+table.pf td.n{width:28px;text-align:center;color:#475569;font-weight:700}
+select.dd{font:inherit;font-size:15px;width:100%;padding:8px 6px;border:2px solid #93c5fd;border-radius:10px;background:#fff;color:#0f172a;min-height:42px}
+select.dd.has{border-color:#1d4ed8;background:#eff6ff}
+.pf .okc{background:#dcfce7}.pf .badcell{background:#fee2e2}
+.pf s{color:#991b1b}
+.pf td[data-l]::before{display:none}.sw{display:none}
+@media(max-width:560px){table.pf tr:first-child{display:none}table.pf,table.pf tbody{display:block}table.pf tr{display:block;border:1px solid #cbd5e1;border-radius:12px;margin:8px 0;padding:6px 8px;background:#fff}
+ table.pf td{display:block;border:0;padding:3px 0}table.pf td.n{width:auto;text-align:left;font-size:13px}table.pf td.n::after{content:' '}.sw{display:inline}
+ .pf td[data-l]::before{display:block;content:attr(data-l);font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em}}
+.gv{background:#f1f5f9;border-radius:10px;padding:8px 12px;margin:6px 0 4px}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap"><a class="back" href="../../">‹ Learning Hub</a><h1>📐 Geometry Ch 5–6 Test</h1><p>Congruent Triangles &amp; Relationships Within Triangles · 几何 5–6 章模拟考</p></div></div>
+<div id="timerbar"></div>
+<main><div class="wrap" id="app"></div></main>
+<script>
+/* Geometry Ch 5-6 test generator: 10 multi-step questions, 36 raw points -> scaled to 40. */
+(function(root){
+'use strict';
+const M='\u2212', DEG='\u00B0', ANG='\u2220', TRI='\u25B3', CONG='\u2245';
+function rng(seed){let s=seed>>>0;const f=()=>{s=(s+0x6D2B79F5)>>>0;let t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296};
+  return {f,int:(a,b)=>a+Math.floor(f()*(b-a+1)),pick:a=>a[Math.floor(f()*a.length)],shuffle:a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(f()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}}}
+const sg=n=>n<0?M+(-n):String(n);
+// polynomial text  c2 v^2 + c1 v + c0
+function poly(c2,c1,c0,v){v=v||'x';const out=[];const add=(c,t)=>{if(c===0)return;const ab=Math.abs(c);const body=(t&&ab===1)?t:(ab+t);out.push([c<0,body])};
+  add(c2,v+'\u00B2');add(c1,v);add(c0,'');if(!out.length)return '0';
+  return out.map(([neg,b],i)=>i===0?(neg?M+b:b):(neg?' '+M+' ':' + ')+b).join('')}
+const lin=(a,b,v)=>poly(0,a,b,v);
+const fac=(r,v)=>'('+(v||'x')+(r>=0?' '+M+' '+r:' + '+(-r))+')';
+const rule=s=>`<div class="sp">${s}</div>`;
+const steps=a=>'<ol class="steps">'+a.map(s=>'<li>'+s+'</li>').join('')+'</ol>';
+const I=s=>'<i>'+s+'</i>';
+function mkQuad(R,r1,r2,m,n,lim){ // x^2+a x+c = m x+n has roots r1,r2
+  const a=m-(r1+r2), c=n+r1*r2; if(Math.abs(a)>(lim||10)||Math.abs(c)>(lim?lim*4:45))return null; return {a,c}}
+function quadSolText(v,qa,qc,m,n,r1,r2){ // v: 'x'
+  const A=qa-m, C=qc-n;
+  return `Set the two expressions equal: ${poly(1,qa,qc,v)} = ${lin(m,n,v)}. Move everything to one side: ${poly(1,A,C,v)} = 0. Factor: ${fac(r1,v)}${fac(r2,v)} = 0, so ${I(v)} = ${r1} or ${I(v)} = ${sg(r2)}.`}
+
+/* diagrams */
+const T=(x,y,s,a,c)=>`<text x="${x}" y="${y}" text-anchor="${a||'middle'}" class="${c||''}">${s}</text>`;
+const Ln=(x1,y1,x2,y2,c)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="${c||''}"/>`;
+const Pg=p=>`<polygon points="${p.map(q=>q.join(',')).join(' ')}"/>`;
+const Dot=(x,y)=>`<circle cx="${x}" cy="${y}" r="3" class="pt"/>`;
+const SVG=(b,h)=>`<svg viewBox="0 0 280 ${h||165}" class="dg" role="img" xmlns="http://www.w3.org/2000/svg">${b}</svg>`;
+
+/* ---------- Q1: congruent parts, quadratic, valid root ---------- */
+function q1(R){for(;;){const r1=R.int(3,9),r2=-R.int(1,7),m=R.int(2,5),n=R.int(-4,6);const val=m*r1+n;if(val<8||val>60||m*r2+n>0)continue;const qd=mkQuad(R,r1,r2,m,n);if(!qd)continue;
+  const bc=R.int(6,15),df=R.int(8,20),per=val+bc+df;
+  return {topic:'5.2 Congruent polygons (quadratic)',pts:4,
+   text:`${TRI}ABC ${CONG} ${TRI}DEF. AB = (${poly(1,qd.a,qd.c)}), DE = (${lin(m,n)}), BC = ${bc}, and DF = ${df}.<br>(a) Solve for ${I('x')}. Only one root gives a possible side length. (b) Find AB. (c) Find the perimeter of ${TRI}ABC.`,
+   parts:[{l:'(a) x',ans:r1,pts:2},{l:'(b) AB',ans:val,pts:1},{l:'(c) perimeter of '+TRI+'ABC',ans:per,pts:1}],
+   sol:steps([`Corresponding sides of congruent triangles are congruent, so AB = DE. ${quadSolText('x',qd.a,qd.c,m,n,r1,r2)}`,
+     `Check each root in a side length: ${I('x')} = ${sg(r2)} makes DE = ${lin(m,n).replace(/x/g,'('+sg(r2)+')')} = ${sg(m*r2+n)}, which is not a positive length, so reject it. <b>${I('x')} = ${r1}</b>.`,
+     `AB = DE = ${m}(${r1}) ${n<0?M+' '+(-n):'+ '+n} = <b>${val}</b>.`,
+     `AC ${CONG} DF (corresponding sides), so AC = ${df}. Perimeter = ${val} + ${bc} + ${df} = <b>${per}</b>.`]),
+   params:{kind:1,r1,r2,m,n,a:qd.a,c:qd.c,bc,df}}}}
+
+/* ---------- Q2: isosceles with quadratic angle expressions ---------- */
+function q2(R){for(;;){const r1=R.int(4,9),r2=-R.int(1,8),m=R.int(3,6),n=R.int(-10,10);const Bv=m*r1+n;if(Bv<32||Bv>76||m*r2+n>0)continue;const qd=mkQuad(R,r1,r2,m,n);if(!qd)continue;
+  const V=180-2*Bv;
+  const svg=SVG(Pg([[140,18],[40,140],[240,140]])+T(140,12,'A')+T(30,150,'B','end')+T(250,150,'C','start')+T(70,134,`(${poly(1,qd.a,qd.c)})${DEG}`,'start','sm')+T(210,134,`(${lin(m,n)})${DEG}`,'end','sm')+Ln(88,72,96,76)+Ln(184,76,192,72));
+  return {topic:'5.1/5.4 Isosceles triangles (quadratic)',pts:4,svg,
+   text:`${TRI}ABC is isosceles with AB ${CONG} AC. m${ANG}B = (${poly(1,qd.a,qd.c)})${DEG} and m${ANG}C = (${lin(m,n)})${DEG}. Only one solution for ${I('x')} gives a real triangle.<br>(a) Find ${I('x')}. (b) Find m${ANG}B. (c) Find the vertex angle m${ANG}A.`,
+   parts:[{l:'(a) x',ans:r1,pts:2},{l:'(b) m\u2220B (degrees)',ans:Bv,pts:1},{l:'(c) m\u2220A (degrees)',ans:V,pts:1}],
+   sol:steps([`AB ${CONG} AC, so the base angles are congruent (Base Angles Theorem): ${ANG}B = ${ANG}C. ${quadSolText('x',qd.a,qd.c,m,n,r1,r2)}`,
+     `${I('x')} = ${sg(r2)} makes ${ANG}C = ${sg(m*r2+n)}${DEG}, which is not a possible angle. Reject it: <b>${I('x')} = ${r1}</b>.`,
+     `m${ANG}B = ${m}(${r1}) ${n<0?M+' '+(-n):'+ '+n} = <b>${Bv}${DEG}</b> (and ${ANG}C is the same).`,
+     `Angle sum: m${ANG}A = 180 ${M} 2(${Bv}) = <b>${V}${DEG}</b>.`]),
+   params:{kind:2,r1,r2,m,n,a:qd.a,c:qd.c}}}}
+
+/* ---------- Q3: theorem + CPCTC ---------- */
+function q3(R){for(;;){const x0=R.int(3,10),a=R.int(2,6),c=R.int(1,6),b=R.int(-5,8);if(a===c)continue;const AB=a*x0+b;if(AB<8||AB>50)continue;const d=AB-c*x0;if(d<-8||d>12)continue;
+  const y0=R.int(3,9),p=R.int(2,6),r=R.int(1,6),qq=R.int(-6,8);if(p===r)continue;const AC=p*y0+qq;if(AC<10||AC>60)continue;const s=AC-r*y0;if(s<-10||s>12)continue;
+  const v=R.pick(['SAS','ASA']);const k=R.int(6,14);
+  const given=v==='SAS'?`It is also given that BC = EF = ${k} and ${ANG}B ${CONG} ${ANG}E.`:`It is also given that ${ANG}A ${CONG} ${ANG}D and ${ANG}B ${CONG} ${ANG}E.`;
+  const opts=['SAS','SSS','ASA','AAS','HL'];
+  return {topic:'5.3\u20135.7 Congruence theorem + CPCTC',pts:4,
+   text:`In ${TRI}ABC and ${TRI}DEF, AB = (${lin(a,b)}) and DE = (${lin(c,d)}) are corresponding sides, and AB ${CONG} DE. ${given}<br>(a) Find ${I('x')}. (b) Which theorem proves ${TRI}ABC ${CONG} ${TRI}DEF? Then, since AC = (${lin(p,qq,'y')}) and DF = (${lin(r,s,'y')}): (c) use CPCTC to find ${I('y')}. (d) Find AC.`,
+   parts:[{l:'(a) x',ans:x0,pts:1},{l:'(b) theorem',type:'mc',opts,ans:opts.indexOf(v),pts:1},{l:'(c) y',ans:y0,pts:1},{l:'(d) AC',ans:AC,pts:1}],
+   sol:steps([`AB ${CONG} DE: ${lin(a,b)} = ${lin(c,d)} → ${a-c}x = ${d-b} → <b>${I('x')} = ${x0}</b> (AB = DE = ${AB}).`,
+     v==='SAS'?`We now have AB ${CONG} DE, BC ${CONG} EF, and ${ANG}B ${CONG} ${ANG}E. ${ANG}B is the angle <i>between</i> AB and BC, so it is <b>SAS</b>.`:`We now have ${ANG}A ${CONG} ${ANG}D, AB ${CONG} DE, and ${ANG}B ${CONG} ${ANG}E. AB is the side <i>between</i> the two angles, so it is <b>ASA</b>.`,
+     `Corresponding parts of congruent triangles are congruent (CPCTC), so AC ${CONG} DF: ${lin(p,qq,'y')} = ${lin(r,s,'y')} → ${p-r}y = ${s-qq} → <b>${I('y')} = ${y0}</b>.`,
+     `AC = ${p}(${y0}) ${qq<0?M+' '+(-qq):'+ '+qq} = <b>${AC}</b> (DF = ${AC} as well).`]),
+   params:{kind:3,x0,a,b,c,d,y0,p,qq,r,s,v}}}}
+
+/* ---------- Q4: centroid 2:1 with expressions (two medians) ---------- */
+function q4(R){for(;;){const x0=R.int(2,8),c=R.int(1,4),d=R.int(-3,8),PD=c*x0+d;if(PD<3)continue;const AP=2*PD,a=R.int(3,9);if(a===2*c)continue;const b=AP-a*x0;if(Math.abs(b)>9)continue;
+  const y0=R.int(2,8),g=R.int(1,3),h=R.int(-2,6),PE=g*y0+h;if(PE<3)continue;const e=R.int(3,8);if(e===2*g)continue;const f=2*PE-e*y0;if(Math.abs(f)>9)continue;
+  const svg=SVG(Pg([[140,14],[30,140],[250,140]])+Ln(140,14,140,140,'dsh')+Ln(30,140,195,77,'dsh')+Dot(140,98)+T(140,10,'A')+T(22,150,'B','end')+T(258,150,'C','start')+T(146,152,'D','start')+T(204,74,'E','start')+T(146,92,'P','start')+
+    T(134,60,`AP=${lin(a,b)}`,'end','sm')+T(146,128,`PD=${lin(c,d)}`,'start','sm')+T(64,102,`BP=${lin(e,f,'y')}`,'middle','sm')+T(196,106,`PE=${lin(g,h,'y')}`,'middle','sm'));
+  return {topic:'6.3 Medians & centroid (2:1)',pts:4,svg,
+   text:`P is the centroid of ${TRI}ABC. AD and BE are medians. AP = (${lin(a,b)}) and PD = (${lin(c,d)}); BP = (${lin(e,f,'y')}) and PE = (${lin(g,h,'y')}).<br>(a) Find ${I('x')}. (b) Find the length of median AD. (c) Find ${I('y')}. (d) Find the length of median BE.`,
+   parts:[{l:'(a) x',ans:x0,pts:1},{l:'(b) AD',ans:3*PD,pts:1},{l:'(c) y',ans:y0,pts:1},{l:'(d) BE',ans:3*PE,pts:1}],
+   sol:steps([`Centroid Theorem: the centroid is 2/3 of the way from a vertex, so AP = 2\u00B7PD. ${lin(a,b)} = 2(${lin(c,d)}) → ${lin(a,b)} = ${lin(2*c,2*d)} → ${a-2*c}x = ${2*d-b} → <b>${I('x')} = ${x0}</b>.`,
+     `AP = ${2*PD}, PD = ${PD}, so AD = AP + PD = <b>${3*PD}</b>.`,
+     `BP = 2\u00B7PE: ${lin(e,f,'y')} = ${lin(2*g,2*h,'y')} → ${e-2*g}y = ${2*h-f} → <b>${I('y')} = ${y0}</b>.`,
+     `BP = ${2*PE}, PE = ${PE}, so BE = <b>${3*PE}</b>.`]),
+   params:{kind:4,x0,a,b,c,d,y0,e,f,g,h}}}}
+
+/* ---------- Q5: midsegment ---------- */
+function q5(R){for(;;){const x0=R.int(4,12),a=R.int(1,3),b=R.int(-3,6),DE=a*x0+b;if(DE<4)continue;const AC=2*DE,c=R.int(3,8);if(c===2*a)continue;const d=AC-c*x0;if(Math.abs(d)>14)continue;
+  const AB=2*R.int(10,30),BC=2*R.int(10,30);const per=(AB+BC+AC)/2;
+  const svg=SVG(Pg([[140,14],[30,140],[250,140]])+Ln(85,77,195,77,'dsh')+Dot(85,77)+Dot(195,77)+T(140,10,'B')+T(22,150,'A','end')+T(258,150,'C','start')+T(78,76,'D','end')+T(202,76,'E','start')+T(140,70,`DE=${lin(a,b)}`,'middle','sm')+T(140,158,`AC=${lin(c,d)}`,'middle','sm'));
+  return {topic:'6.4 Midsegment theorem',pts:4,svg,
+   text:`In ${TRI}ABC, D and E are the midpoints of AB and BC. DE = (${lin(a,b)}) and AC = (${lin(c,d)}). Also AB = ${AB} and BC = ${BC}. F is the midpoint of AC.<br>(a) Find ${I('x')}. (b) Find AC. (c) Find the perimeter of the midsegment triangle ${TRI}DEF.`,
+   parts:[{l:'(a) x',ans:x0,pts:1},{l:'(b) AC',ans:AC,pts:1},{l:'(c) perimeter of '+TRI+'DEF',ans:per,pts:2}],
+   sol:steps([`DE joins two midpoints, so by the Triangle Midsegment Theorem DE = \u00BD\u00B7AC, i.e. AC = 2\u00B7DE. ${lin(c,d)} = 2(${lin(a,b)}) = ${lin(2*a,2*b)} → ${c-2*a}x = ${2*b-d} → <b>${I('x')} = ${x0}</b>.`,
+     `DE = ${DE}, so AC = <b>${AC}</b>.`,
+     `Each side of ${TRI}DEF is half of the side it is parallel to: DE = ${AC}/2 = ${DE}, EF = AB/2 = ${AB/2}, DF = BC/2 = ${BC/2}.`,
+     `Perimeter = ${DE} + ${AB/2} + ${BC/2} = <b>${per}</b> (half of the perimeter of ${TRI}ABC, ${AB+BC+AC}).`]),
+   params:{kind:5,x0,a,b,c,d,AB,BC}}}}
+
+/* ---------- Q6: triangle inequality range ---------- */
+function q6(R){for(;;){const s1=R.int(5,14),s2=s1+R.int(2,9),L=s2-s1,U=s1+s2,a=R.pick([2,3,4]),b=R.int(-4,L-1);const lo=(L-b)/a,hi=(U-b)/a;if(lo<=0)continue;
+  const xmin=Math.floor(lo+1e-9)+1,xmax=Math.ceil(hi-1e-9)-1;if(xmax-xmin<3)continue;
+  const per=s1+s2+a*xmax+b;
+  return {topic:'6.5 Triangle inequality',pts:4,
+   text:`The sides of a triangle measure ${s1}, ${s2}, and (${lin(a,b)}), where ${I('x')} is a whole number.<br>(a) Find the smallest possible whole-number value of ${I('x')}. (b) Find the largest possible whole-number value of ${I('x')}. (c) Find the largest possible perimeter of the triangle.`,
+   parts:[{l:'(a) smallest x',ans:xmin,pts:1},{l:'(b) largest x',ans:xmax,pts:1},{l:'(c) largest perimeter',ans:per,pts:2}],
+   sol:steps([`Triangle Inequality: the third side must be greater than the difference and less than the sum of the other two: ${L} < ${lin(a,b)} < ${U}.`,
+     `Subtract ${b<0?M+' ('+b+')':b} and divide by ${a}: ${L-b}/${a} < x < ${U-b}/${a}, i.e. ${+lo.toFixed(3)} < x < ${+hi.toFixed(3)}. (Strict inequalities, so equality is not allowed.)`,
+     `Smallest whole number: <b>${xmin}</b>. Largest whole number: <b>${xmax}</b>.`,
+     `Largest perimeter uses x = ${xmax}: third side = ${a}(${xmax}) ${b<0?M+' '+(-b):'+ '+b} = ${a*xmax+b}. Perimeter = ${s1} + ${s2} + ${a*xmax+b} = <b>${per}</b>.`]),
+   params:{kind:6,s1,s2,a,b}}}}
+
+/* ---------- Q7: hinge with algebra ---------- */
+function q7(R){for(;;){const a=R.int(3,6),b=R.int(-8,8),c=R.int(50,90),lo=(c-b)/a,hi=(180-b)/a;if(lo<=0)continue;const xmin=Math.floor(lo+1e-9)+1,xmax=Math.ceil(hi-1e-9)-1;if(xmax-xmin<4)continue;
+  const dg=SVG(Pg([[20,125],[120,125],[78,38]])+Pg([[155,125],[255,125],[196,70]])+T(24,140,'B','start')+T(122,140,'A','start')+T(76,32,'C')+T(159,140,'E','start')+T(257,140,'D','start')+T(194,64,'F')+
+     T(60,112,`(${lin(a,b)})${DEG}`,'start','sm')+T(172,112,`${c}${DEG}`,'start','sm'));
+  return {topic:'6.6 Hinge theorem (inequalities in two triangles)',pts:4,svg:dg,
+   text:`In ${TRI}ABC and ${TRI}DEF, AB ${CONG} DE and BC ${CONG} EF. m${ANG}B = (${lin(a,b)})${DEG} and m${ANG}E = ${c}${DEG}. It is given that AC &gt; DF.<br>(a) Find the smallest possible whole-number value of ${I('x')}. (b) Find the largest possible whole-number value of ${I('x')}. (c) Find the difference between the greatest and least possible whole-number measures of ${ANG}B.`,
+   parts:[{l:'(a) smallest x',ans:xmin,pts:1},{l:'(b) largest x',ans:xmax,pts:1},{l:'(c) difference (degrees)',ans:a*(xmax-xmin),pts:2}],
+   sol:steps([`Two pairs of sides are congruent, and the third side AC is longer than DF, so by the Converse of the Hinge Theorem the included angle is larger: m${ANG}B &gt; m${ANG}E.`,
+     `${lin(a,b)} &gt; ${c} → x &gt; ${+lo.toFixed(3)}.`,
+     `An angle in a triangle must be less than 180${DEG}: ${lin(a,b)} &lt; 180 → x &lt; ${+hi.toFixed(3)}.`,
+     `So ${+lo.toFixed(3)} &lt; x &lt; ${+hi.toFixed(3)}. Smallest whole number <b>${xmin}</b>, largest <b>${xmax}</b>.`,
+     `m${ANG}B ranges from ${a*xmin+b}${DEG} to ${a*xmax+b}${DEG}. Difference = ${a*xmax+b} ${M} ${a*xmin+b} = <b>${a*(xmax-xmin)}</b>.`]),
+   params:{kind:7,a,b,c}}}}
+
+/* ---------- Q8: circumcenter (quadratic) + incenter ---------- */
+function q8(R){for(;;){const r1=R.int(3,8),r2=-R.int(1,6),m=R.int(2,5),n=R.int(-3,8);const val=m*r1+n;if(val<5||m*r2+n>0)continue;const qd=mkQuad(R,r1,r2,m,n);if(!qd)continue;
+  const tr=R.pick([[3,4,5],[5,12,13],[8,15,17],[7,24,25],[9,12,15]]),k=tr[0]===9?1:R.int(1,2);const l1=tr[0]*k,l2=tr[1]*k,hy=tr[2]*k,rin=(l1+l2-hy)/2;
+  return {topic:'6.2 Circumcenter & incenter',pts:3,
+   text:`(a)\u2013(b) P is the circumcenter of ${TRI}ABC. PA = (${lin(m,n)}) and PB = (${poly(1,qd.a,qd.c)}). Solve for ${I('x')} (reject the root that gives a negative length), then find the circumradius PA.<br>(c) A right triangle has legs ${l1} and ${l2}. Find the radius of its inscribed circle.`,
+   parts:[{l:'(a) x',ans:r1,pts:1},{l:'(b) PA',ans:val,pts:1},{l:'(c) inradius',ans:rin,pts:1}],
+   sol:steps([`Circumcenter Theorem: the circumcenter is equidistant from the vertices, so PA = PB. ${quadSolText('x',qd.a,qd.c,m,n,r1,r2)}`,
+     `${I('x')} = ${sg(r2)} gives PA = ${sg(m*r2+n)}, not a length. So <b>${I('x')} = ${r1}</b>.`,
+     `PA = ${m}(${r1}) ${n<0?M+' '+(-n):'+ '+n} = <b>${val}</b>.`,
+     `Hypotenuse = \u221A(${l1}\u00B2 + ${l2}\u00B2) = \u221A${l1*l1+l2*l2} = ${hy}. The incenter is equidistant from the sides: area = \u00BD\u00B7perimeter\u00B7r → \u00BD(${l1})(${l2}) = \u00BD(${l1+l2+hy})r → ${l1*l2/2} = ${(l1+l2+hy)/2}r → r = <b>${rin}</b>. (Shortcut for right triangles: r = (a + b ${M} c)/2.)`]),
+   params:{kind:8,r1,r2,m,n,a:qd.a,c:qd.c,l1,l2}}}}
+
+/* ---------- Q9: angle bisector (quadratic) + perpendicular bisector ---------- */
+function q9(R){for(;;){const r1=R.int(3,9),r2=-R.int(1,8),m=R.int(2,5),n=R.int(-6,8);const val=m*r1+n;if(val<15||val>70||m*r2+n>0)continue;const qd=mkQuad(R,r1,r2,m,n);if(!qd)continue;
+  const y0=R.int(2,9),a2=R.int(2,7),c2=R.int(1,6),b2=R.int(-5,8);if(a2===c2)continue;const PX=a2*y0+b2;if(PX<8||PX>50)continue;const d2=PX-c2*y0;if(d2<-8||d2>12)continue;
+  return {topic:'6.1 Angle & perpendicular bisectors',pts:3,
+   text:`(a)\u2013(b) Ray BD bisects ${ANG}ABC. m${ANG}ABD = (${poly(1,qd.a,qd.c)})${DEG} and m${ANG}DBC = (${lin(m,n)})${DEG}. Find ${I('x')} (reject the root that gives a non-positive angle), then find m${ANG}ABC.<br>(c) Point P lies on the perpendicular bisector of XY. PX = (${lin(a2,b2,'y')}) and PY = (${lin(c2,d2,'y')}). Find PX.`,
+   parts:[{l:'(a) x',ans:r1,pts:1},{l:'(b) m\u2220ABC (degrees)',ans:2*val,pts:1},{l:'(c) PX',ans:PX,pts:1}],
+   sol:steps([`A bisector splits the angle into two equal angles: ${ANG}ABD = ${ANG}DBC. ${quadSolText('x',qd.a,qd.c,m,n,r1,r2)}`,
+     `${I('x')} = ${sg(r2)} gives ${ANG}DBC = ${sg(m*r2+n)}${DEG}, not a real angle. So <b>${I('x')} = ${r1}</b>.`,
+     `Each half is ${m}(${r1}) ${n<0?M+' '+(-n):'+ '+n} = ${val}${DEG}, so m${ANG}ABC = 2(${val}) = <b>${2*val}${DEG}</b>.`,
+     `Perpendicular Bisector Theorem: P is equidistant from X and Y, so PX = PY: ${lin(a2,b2,'y')} = ${lin(c2,d2,'y')} → ${a2-c2}y = ${d2-b2} → ${I('y')} = ${y0}. PX = ${a2}(${y0}) ${b2<0?M+' '+(-b2):'+ '+b2} = <b>${PX}</b>.`]),
+   params:{kind:9,r1,r2,m,n,a:qd.a,c:qd.c,y0,a2,b2,c2,d2}}}}
+
+/* ---------- Q10: coordinate proof step ---------- */
+function classify(P){const d=[0,1,2].map(i=>{const A=P[i],B=P[(i+1)%3];return (A[0]-B[0])**2+(A[1]-B[1])**2}).sort((x,y)=>x-y);
+  const iso=d[0]===d[1]||d[1]===d[2],right=d[0]+d[1]===d[2];return {d,iso,right}}
+const CL=['Isosceles right triangle','Isosceles, not right','Scalene right triangle','Scalene, not right'];
+const clIdx=c=>c.iso?(c.right?0:1):(c.right?2:3);
+function q10(R){for(;;){const kind=R.pick(['isoRight','isoAcute','scalene']);let P;
+  if(kind==='isoRight'){const p=R.int(1,6)*R.pick([1,-1]),q=R.int(1,6)*R.pick([1,-1]),A=[R.int(-4,4),R.int(-4,4)];P=[A,[A[0]+p,A[1]+q],[A[0]-q,A[1]+p]]}
+  else if(kind==='isoAcute'){const k=R.int(2,6),h=R.int(2,9),y=R.int(-4,3),sx=R.int(-3,3);if(h===k)continue;P=[[sx-k,y],[sx+k,y],[sx,y+h]]}
+  else{P=[0,1,2].map(()=>[R.int(-8,8),R.int(-8,8)])}
+  if(P.some(p=>Math.abs(p[0])>10||Math.abs(p[1])>10))continue;
+  const cr=(P[1][0]-P[0][0])*(P[2][1]-P[0][1])-(P[1][1]-P[0][1])*(P[2][0]-P[0][0]);if(cr===0)continue;
+  const c=classify(P);if(kind==='scalene'&&(c.iso||c.right))continue;if(new Set(c.d).size===1)continue;
+  const longest=Math.sqrt(c.d[2]),ci=clIdx(c);
+  const nm=['A','B','C'];const lab=P.map((p,i)=>`${nm[i]}(${sg(p[0])}, ${sg(p[1])})`).join(', ');
+  const sides=[[0,1],[1,2],[0,2]].map(([i,j])=>({n:nm[i]+nm[j],d2:(P[i][0]-P[j][0])**2+(P[i][1]-P[j][1])**2,dx:P[j][0]-P[i][0],dy:P[j][1]-P[i][1]}));
+  const sqt=n=>{let k=1,r=n;for(let f=2;f*f<=r;f++){while(r%(f*f)===0){r/=f*f;k*=f}}return r===1?String(k):(k===1?'':k)+'\u221A'+r};
+  return {topic:'5.8 Coordinate proofs (distance formula)',pts:2,
+   text:`${TRI}ABC has vertices ${lab}. Use the distance formula on all three sides.<br>(a) Find the length of the longest side to the nearest hundredth. (b) Classify the triangle (use side lengths, and the converse of the Pythagorean Theorem if needed).`,
+   parts:[{l:'(a) longest side',ans:Math.round(longest*100)/100,pts:1,tol:0.011},{l:'(b) classification',type:'mc',opts:CL,ans:ci,pts:1}],
+   sol:steps(sides.map(s=>`${s.n} = \u221A[(${sg(s.dx)})\u00B2 + (${sg(s.dy)})\u00B2] = \u221A${s.d2} = ${sqt(s.d2)} \u2248 ${Math.sqrt(s.d2).toFixed(2)}`).concat([
+     `Squared lengths: ${c.d.join(', ')}. ${c.iso?'Two sides are equal, so the triangle is isosceles.':'No two sides are equal, so it is scalene.'} ${c.d[0]} + ${c.d[1]} ${c.right?'=':'\u2260'} ${c.d[2]}, so it is ${c.right?'<b>a right triangle</b>':'<b>not a right triangle</b>'}.`,
+     `Longest side \u2248 <b>${(Math.round(longest*100)/100).toFixed(2)}</b>. Classification: <b>${CL[ci]}</b>.`])),
+   params:{kind:10,P}}}}
+
+/* ---------- Two-column proofs (Q11-Q13) ---------- */
+const REASONS=['Given','Reflexive Property of Congruence','Definition of midpoint','Definition of angle bisector','Definition of perpendicular lines','Definition of right triangle','Vertical Angles Congruence Theorem','Alternate Interior Angles Theorem','Corresponding Angles Theorem','Right Angles Congruence Theorem','Base Angles Theorem','Converse of the Base Angles Theorem','Perpendicular Bisector Theorem','Angle Bisector Theorem','SSS Congruence Theorem','SAS Congruence Theorem','ASA Congruence Theorem','AAS Congruence Theorem','HL Congruence Theorem','CPCTC'].sort((a,b)=>a.toLowerCase()<b.toLowerCase()?-1:1);
+const LETTERS='ABCDEFGHJKLMNPQRSTUVWXYZ'.split('');
+const cg=(x,y)=>`${x} ${CONG} ${y}`, an=(a,b,c)=>ANG+a+(b||'')+(c||''), tr=(a,b,c)=>TRI+a+b+c;
+function tick(x1,y1,x2,y2,n){const mx=(x1+x2)/2,my=(y1+y2)/2,L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L;let o='';for(let i=0;i<n;i++){const t=(i-(n-1)/2)*5,cx=mx+ux*t,cy=my+uy*t;o+=Ln((cx-uy*6).toFixed(1),(cy+ux*6).toFixed(1),(cx+uy*6).toFixed(1),(cy-ux*6).toFixed(1),'mk')}return o}
+function arc(vx,vy,x1,y1,x2,y2,r,n){let o='';const a1=Math.hypot(x1-vx,y1-vy),a2=Math.hypot(x2-vx,y2-vy),u1=[(x1-vx)/a1,(y1-vy)/a1],u2=[(x2-vx)/a2,(y2-vy)/a2],sw=(u1[0]*u2[1]-u1[1]*u2[0])>0?1:0;
+  for(let i=0;i<n;i++){const rr=r+i*4;o+=`<path class="mk" d="M${(vx+u1[0]*rr).toFixed(1)} ${(vy+u1[1]*rr).toFixed(1)} A${rr} ${rr} 0 0 ${sw} ${(vx+u2[0]*rr).toFixed(1)} ${(vy+u2[1]*rr).toFixed(1)}"/>`}return o}
+function rtm(vx,vy,x1,y1,x2,y2,s){s=s||10;const a1=Math.hypot(x1-vx,y1-vy),a2=Math.hypot(x2-vx,y2-vy),u=[(x1-vx)/a1,(y1-vy)/a1],w=[(x2-vx)/a2,(y2-vy)/a2];
+  return `<polyline class="mk" points="${vx+u[0]*s},${vy+u[1]*s} ${vx+(u[0]+w[0])*s},${vy+(u[1]+w[1])*s} ${vx+w[0]*s},${vy+w[1]*s}"/>`}
+const poly2=(pts)=>`<polygon points="${pts.map(q=>q.join(',')).join(' ')}"/>`;
+const PL=(p)=>p; // placeholder for readability
+
+/* Each template: rows {s,r,u (statement fully determined by its reason), note}, pats = list of blank patterns [row,'S'|'R'|'B'] (8 blanks), distractors */
+const PT={
+ A(R,L){const [a,b,c,d,e]=L;
+  const svg=SVG(poly2([[50,30],[230,30],[230,130],[50,130]])+Ln(50,30,230,130)+Ln(50,130,230,30)+tick(50,30,140,80,1)+tick(140,80,230,130,1)+tick(50,130,140,80,2)+tick(140,80,230,30,2)+
+    T(42,26,a,'end')+T(238,26,d,'start')+T(238,146,c,'start')+T(42,146,b,'end')+T(140,66,e));
+  return {id:'A',topic:'5.3/5.7 Proof: SAS + vertical angles + CPCTC',svg,
+   given:[`${e} is the midpoint of ${a}${c}`,`${e} is the midpoint of ${b}${d}`],prove:cg(a+b,c+d),
+   rows:[{s:`${e} is the midpoint of ${a}${c}`,r:'Given',u:0,note:'First given fact.'},
+    {s:cg(a+e,c+e),r:'Definition of midpoint',u:0,note:`A midpoint splits a segment into two congruent pieces, so ${a}${e} ${CONG} ${c}${e}.`},
+    {s:`${e} is the midpoint of ${b}${d}`,r:'Given',u:0,note:'Second given fact.'},
+    {s:cg(b+e,d+e),r:'Definition of midpoint',u:0,note:`Same idea for ${b}${d}.`},
+    {s:cg(an(a,e,b),an(c,e,d)),r:'Vertical Angles Congruence Theorem',u:1,note:`${a}${c} and ${b}${d} cross at ${e}, so these angles are vertical angles.`},
+    {s:cg(tr(a,e,b),tr(c,e,d)),r:'SAS Congruence Theorem',u:1,note:`Two pairs of sides and the angle <i>between</i> them (the vertical angles at ${e}).`},
+    {s:cg(a+b,c+d),r:'CPCTC',u:1,note:'Corresponding parts of congruent triangles are congruent.'}],
+   pats:[[[1,'R'],[2,'R'],[3,'R'],[4,'R'],[5,'S'],[6,'B'],[7,'S']],[[1,'R'],[2,'R'],[4,'R'],[5,'B'],[6,'B'],[7,'R']]],
+   dist:[cg(an(a,e,b),an(a,e,d)),cg(tr(a,e,b),tr(d,e,c)),cg(a+c,b+d),cg(a+d,b+c)]}},
+ B(R,L){const [a,b,c,d]=L;
+  const svg=SVG(poly2([[80,30],[240,30],[200,130],[40,130]])+Ln(80,30,200,130)+tick(80,30,240,30,1)+tick(40,130,200,130,1)+T(160,24,'&gt;&gt;','middle','sm')+T(120,150,'&gt;&gt;','middle','sm')+
+    T(72,24,a,'end')+T(248,24,b,'start')+T(208,146,c,'start')+T(32,146,d,'end'));
+  return {id:'B',topic:'5.3/5.7 Proof: SAS + parallel lines + CPCTC',svg,
+   given:[`${a}${b} \u2225 ${d}${c}`,cg(a+b,d+c)],prove:cg(b+c,d+a),
+   rows:[{s:`${a}${b} \u2225 ${d}${c}`,r:'Given',u:0,note:'The sides are parallel.'},
+    {s:cg(a+b,d+c),r:'Given',u:0,note:'The same two sides are congruent.'},
+    {s:cg(an(b,a,c),an(d,c,a)),r:'Alternate Interior Angles Theorem',u:1,note:`${a}${b} \u2225 ${d}${c} and ${a}${c} is a transversal, so these alternate interior angles are congruent.`},
+    {s:cg(a+c,c+a),r:'Reflexive Property of Congruence',u:1,note:`${a}${c} is a side of both triangles.`},
+    {s:cg(tr(a,b,c),tr(c,d,a)),r:'SAS Congruence Theorem',u:1,note:`${a}${b} ${CONG} ${c}${d}, ${an(b,a,c)} ${CONG} ${an(d,c,a)} (the angle between them), and ${a}${c} ${CONG} ${c}${a}.`},
+    {s:cg(b+c,d+a),r:'CPCTC',u:1,note:'Corresponding parts of congruent triangles are congruent.'}],
+   pats:[[[1,'R'],[2,'R'],[3,'B'],[4,'R'],[5,'B'],[6,'S']],[[1,'R'],[2,'R'],[3,'S'],[4,'B'],[5,'R'],[6,'B']]],
+   dist:[cg(an(b,a,c),an(a,c,d)),cg(a+c,b+d),cg(tr(a,b,c),tr(a,d,c)),cg(a+b,a+d)]}},
+ C(R,L){const [a,b,c,d]=L;
+  const svg=SVG(poly2([[40,135],[140,20],[240,135]])+Ln(140,20,140,135)+arc(140,20,40,135,140,135,26,1)+arc(140,20,240,135,140,135,26,1)+arc(40,135,140,20,140,135,24,1)+arc(240,135,140,20,140,135,24,1)+
+    T(140,12,b)+T(32,150,a,'end')+T(248,150,c,'start')+T(140,152,d));
+  return {id:'C',topic:'5.6/5.7 Proof: AAS + angle bisector + CPCTC',svg,
+   given:[cg(an(a),an(c)),`${b}${d} bisects ${an(a,b,c)}`],prove:cg(a+d,c+d),
+   rows:[{s:cg(an(a),an(c)),r:'Given',u:0,note:'A pair of angles is given congruent.'},
+    {s:`${b}${d} bisects ${an(a,b,c)}`,r:'Given',u:0,note:'The bisector is given.'},
+    {s:cg(an(a,b,d),an(c,b,d)),r:'Definition of angle bisector',u:1,note:`An angle bisector splits the angle into two congruent angles.`},
+    {s:cg(b+d,b+d),r:'Reflexive Property of Congruence',u:1,note:`${b}${d} is a side of both triangles.`},
+    {s:cg(tr(a,b,d),tr(c,b,d)),r:'AAS Congruence Theorem',u:1,note:`Two angle pairs and a <i>non-included</i> side (${b}${d}).`},
+    {s:cg(a+d,c+d),r:'CPCTC',u:1,note:'Corresponding parts of congruent triangles are congruent.'}],
+   pats:[[[1,'R'],[2,'R'],[3,'B'],[4,'R'],[5,'B'],[6,'S']],[[1,'R'],[2,'R'],[3,'S'],[4,'B'],[5,'R'],[6,'B']]],
+   dist:[cg(an(a,b,d),an(c,b,a)),cg(a+b,c+b),cg(tr(a,b,d),tr(c,d,b)),cg(an(b,d,a),an(b,d,c))]}},
+ D(R,L){const [a,b,c,d]=L;
+  const svg=SVG(poly2([[50,30],[230,30],[230,130],[50,130]])+Ln(50,30,230,130)+rtm(230,30,50,30,230,130,10)+rtm(50,130,230,130,50,30,10)+tick(230,30,230,130,1)+tick(50,130,50,30,1)+
+    T(42,26,a,'end')+T(238,26,b,'start')+T(238,146,c,'start')+T(42,146,d,'end'));
+  return {id:'D',topic:'5.5/5.7 Proof: HL + CPCTC',svg,
+   given:[`${an(a,b,c)} and ${an(c,d,a)} are right angles`,cg(b+c,d+a)],prove:cg(a+b,c+d),
+   rows:[{s:`${an(a,b,c)} and ${an(c,d,a)} are right angles`,r:'Given',u:0,note:'Both marked angles are right angles.'},
+    {s:`${tr(a,b,c)} and ${tr(c,d,a)} are right triangles`,r:'Definition of right triangle',u:1,note:'A triangle with a right angle is a right triangle.'},
+    {s:cg(b+c,d+a),r:'Given',u:0,note:'One pair of legs is given.'},
+    {s:cg(a+c,c+a),r:'Reflexive Property of Congruence',u:1,note:`${a}${c} is the hypotenuse of both triangles.`},
+    {s:cg(tr(a,b,c),tr(c,d,a)),r:'HL Congruence Theorem',u:1,note:`Right triangles with congruent hypotenuses (${a}${c}) and a pair of congruent legs (${b}${c}, ${d}${a}).`},
+    {s:cg(a+b,c+d),r:'CPCTC',u:1,note:'Corresponding parts of congruent triangles are congruent.'}],
+   pats:[[[1,'R'],[2,'B'],[3,'R'],[4,'R'],[5,'B'],[6,'S']],[[1,'R'],[2,'S'],[3,'R'],[4,'B'],[5,'R'],[6,'B']]],
+   dist:[cg(a+d,b+c),cg(tr(a,b,c),tr(a,d,c)),cg(a+c,b+d),`${an(b,a,c)} and ${an(d,c,a)} are right angles`]}},
+ E(R,L){const [a,b,c,d]=L;
+  const svg=SVG(poly2([[140,18],[40,138],[240,138]])+Ln(140,18,140,138)+tick(140,18,40,138,1)+tick(140,18,240,138,1)+tick(40,138,140,138,2)+tick(140,138,240,138,2)+
+    T(140,12,a)+T(32,152,b,'end')+T(248,152,c,'start')+T(140,154,d));
+  return {id:'E',topic:'5.5/5.7 Proof: SSS + midpoint + CPCTC',svg,
+   given:[cg(a+b,a+c),`${d} is the midpoint of ${b}${c}`],prove:cg(an(b,a,d),an(c,a,d)),
+   rows:[{s:cg(a+b,a+c),r:'Given',u:0,note:`${tr(a,b,c)} is isosceles.`},
+    {s:`${d} is the midpoint of ${b}${c}`,r:'Given',u:0,note:'The midpoint is given.'},
+    {s:cg(b+d,c+d),r:'Definition of midpoint',u:1,note:'A midpoint splits the segment into two congruent pieces.'},
+    {s:cg(a+d,a+d),r:'Reflexive Property of Congruence',u:1,note:`${a}${d} is a side of both triangles.`},
+    {s:cg(tr(a,b,d),tr(a,c,d)),r:'SSS Congruence Theorem',u:1,note:`All three pairs of sides are congruent: ${a}${b}${CONG}${a}${c}, ${b}${d}${CONG}${c}${d}, ${a}${d}${CONG}${a}${d}.`},
+    {s:cg(an(b,a,d),an(c,a,d)),r:'CPCTC',u:1,note:'Corresponding parts of congruent triangles are congruent.'}],
+   pats:[[[1,'R'],[2,'R'],[3,'B'],[4,'R'],[5,'B'],[6,'S']],[[1,'R'],[2,'R'],[3,'S'],[4,'B'],[5,'R'],[6,'B']]],
+   dist:[cg(an(a,b,d),an(a,c,d)),cg(an(a,d,b),an(a,d,c)),cg(tr(a,b,d),tr(a,d,c)),cg(a+d,b+c)]}},
+ F(R,L){const [a,b,m,p,q]=L;
+  const svg=SVG(Ln(40,85,240,85)+Ln(140,22,140,142,'dsh')+Ln(140,22,40,85)+Ln(140,22,240,85)+Ln(140,142,40,85)+Ln(140,142,240,85)+tick(40,85,140,85,1)+tick(140,85,240,85,1)+rtm(140,85,240,85,140,142,9)+Dot(140,85)+
+    T(32,89,a,'end')+T(248,89,b,'start')+T(132,80,m,'end')+T(140,14,p)+T(140,158,q));
+  return {id:'F',topic:'6.1/5.5 Proof: Perpendicular bisector + SSS + CPCTC',svg,
+   given:[`${p}${q} is the perpendicular bisector of ${a}${b}`],prove:cg(an(p,a,q),an(p,b,q)),
+   rows:[{s:`${p}${q} is the perpendicular bisector of ${a}${b}`,r:'Given',u:0,note:`${p} and ${q} lie on the perpendicular bisector.`},
+    {s:cg(p+a,p+b),r:'Perpendicular Bisector Theorem',u:0,note:`${p} is on the perpendicular bisector of ${a}${b}, so it is equidistant from ${a} and ${b}.`},
+    {s:cg(q+a,q+b),r:'Perpendicular Bisector Theorem',u:0,note:`${q} is also on the perpendicular bisector, so ${q}${a} ${CONG} ${q}${b}.`},
+    {s:cg(p+q,p+q),r:'Reflexive Property of Congruence',u:1,note:`${p}${q} is a side of both triangles.`},
+    {s:cg(tr(a,p,q),tr(b,p,q)),r:'SSS Congruence Theorem',u:1,note:`${a}${p}${CONG}${b}${p}, ${a}${q}${CONG}${b}${q}, ${p}${q}${CONG}${p}${q}.`},
+    {s:cg(an(p,a,q),an(p,b,q)),r:'CPCTC',u:1,note:'Corresponding parts of congruent triangles are congruent.'}],
+   pats:[[[1,'R'],[2,'R'],[3,'R'],[4,'B'],[5,'B'],[6,'S']],[[1,'R'],[2,'R'],[3,'R'],[4,'S'],[5,'B'],[6,'B']]],
+   dist:[cg(an(a,p,q),an(b,p,q)),cg(tr(a,p,q),tr(b,q,p)),cg(a+m,p+m),cg(a+b,p+q)]}},
+ G(R,L){const [a,b,c,d]=L;
+  const svg=SVG(poly2([[140,18],[40,138],[240,138]])+Ln(140,18,140,138)+tick(140,18,40,138,1)+tick(140,18,240,138,1)+rtm(140,138,140,18,40,138,10)+
+    T(140,12,a)+T(32,152,b,'end')+T(248,152,c,'start')+T(140,154,d));
+  return {id:'G',topic:'5.4/5.6 Proof: Base angles + AAS + CPCTC',svg,
+   given:[cg(a+b,a+c),`${a}${d} \u22A5 ${b}${c}`],prove:cg(b+d,c+d),
+   rows:[{s:cg(a+b,a+c),r:'Given',u:0,note:`${tr(a,b,c)} is isosceles with vertex ${a}.`},
+    {s:cg(an(b),an(c)),r:'Base Angles Theorem',u:1,note:`Angles opposite congruent sides ${a}${c} and ${a}${b} are congruent.`},
+    {s:`${a}${d} \u22A5 ${b}${c}`,r:'Given',u:0,note:'The altitude is perpendicular to the base.'},
+    {s:`${an(a,d,b)} and ${an(a,d,c)} are right angles`,r:'Definition of perpendicular lines',u:1,note:'Perpendicular lines meet at right angles.'},
+    {s:cg(an(a,d,b),an(a,d,c)),r:'Right Angles Congruence Theorem',u:1,note:'All right angles are congruent.'},
+    {s:cg(a+d,a+d),r:'Reflexive Property of Congruence',u:1,note:`${a}${d} is a side of both triangles.`},
+    {s:cg(tr(a,b,d),tr(a,c,d)),r:'AAS Congruence Theorem',u:1,note:`${an(b)} ${CONG} ${an(c)}, ${an(a,d,b)} ${CONG} ${an(a,d,c)}, and the non-included side ${a}${d}.`},
+    {s:cg(b+d,c+d),r:'CPCTC',u:1,note:`Corresponding parts of congruent triangles are congruent. (So ${d} is the midpoint of ${b}${c}.)`}],
+   pats:[[[1,'R'],[2,'S'],[3,'R'],[4,'R'],[5,'S'],[6,'R'],[7,'S'],[8,'R']],[[1,'R'],[2,'R'],[3,'R'],[4,'S'],[5,'R'],[6,'S'],[7,'R'],[8,'S']]],
+   dist:[cg(an(a),an(b)),cg(an(b,a,d),an(c,a,d)),cg(tr(a,b,d),tr(a,d,c)),cg(a+d,b+c)]}}
+};
+function mkProof(R,id){const need={A:5,B:4,C:4,D:4,E:4,F:5,G:4}[id];const L=R.shuffle(LETTERS).slice(0,need);const t=PT[id](R,L);
+  const pat=R.pick(t.pats);const blanks=[];pat.forEach(([row,k])=>{if(k!=='R')blanks.push([row,'S']);if(k!=='S')blanks.push([row,'R'])});
+  const sTruths=blanks.filter(b=>b[1]==='S').map(b=>t.rows[b[0]-1].s);
+  const sOpts=R.shuffle(sTruths.concat(t.dist.filter(x=>!t.rows.some(r=>r.s===x)).slice(0,3)));
+  const parts=blanks.map(([row,k])=>{const rw=t.rows[row-1];
+    return k==='S'?{l:`Row ${row} \u2013 Statement`,type:'dd',opts:sOpts,ans:sOpts.indexOf(rw.s),pts:0.5,row,col:'S'}:{l:`Row ${row} \u2013 Reason`,type:'dd',opts:REASONS,ans:REASONS.indexOf(rw.r),pts:0.5,row,col:'R'}});
+  parts.forEach((p,i)=>{const rw=t.rows[p.row-1];rw[p.col==='S'?'bs':'br']=i});
+  const sol=steps([`<b>Plan:</b> show that two triangles are congruent (${t.rows.find(r=>/Congruence Theorem$/.test(r.r)&&/\u25B3/.test(r.s)).r.split(' ')[0]}), then use CPCTC to reach the <i>Prove</i> statement.`].concat(t.rows.map((r,i)=>`<b>${r.s}</b> \u2014 <i>${r.r}</i>. ${r.note}`)));
+  return {topic:t.topic,pts:parts.length*0.5,svg:t.svg,
+   text:`<b>Given:</b> ${t.given.join('; ')}<br><b>Prove:</b> ${t.prove}<br>Complete the two-column proof: choose the correct statement or reason for each blank (\u25BE).`,
+   parts,sol,params:{kind:11,id,L,rows:t.rows.map(r=>({s:r.s,r:r.r,u:r.u,bs:r.bs,br:r.br})),given:t.given,prove:t.prove,sOpts},
+   proof:{given:t.given,prove:t.prove,rows:t.rows.map(r=>({s:r.s,r:r.r,bs:r.bs,br:r.br}))}}}
+function pickProofs(R){const first=R.pick(['F','G']);const rest=R.shuffle(['A','B','C','D','E']).slice(0,2);return R.shuffle([first].concat(rest))}
+
+function makeTest(seed){const R=rng(seed*7919+13);const qs=[q1,q2,q3,q4,q5,q6,q7,q8,q9,q10].map((g,i)=>{const q=g(R);q.n=i+1;
+  q.parts.forEach(p=>{if(p.type==='mc')return;p.type='num';p.tol=p.tol||0.01});
+  q.svg=q.svg||'';return q});
+  pickProofs(R).forEach((id,j)=>{const q=mkProof(R,id);q.n=11+j;qs.push(q)});return qs}
+const totalOf=T=>T.reduce((s,q)=>s+q.parts.reduce((a,p)=>a+p.pts,0),0);
+const api={makeTest,totalOf,rng,classify,CL,REASONS};
+if(typeof module==='object'&&module.exports)module.exports=api;else root.GEO56=api;
+})(typeof self!=='undefined'?self:this);
+
+</script>
+<script>
+const KEY='geo56v4', SECS=55*60; let TOTAL=48;
+const $=s=>document.querySelector(s), app=$('#app');
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+let S=null,T=null,timerH=null;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function parseNum(s){s=String(s).replace(/[\u2212\u2013\u2014]/g,'-').replace(/,/g,'');const m=s.match(/-?\d+(?:\.\d+)?(?:\s*\/\s*\d+)?|-?\.\d+/g);if(!m)return NaN;const t=m[m.length-1].replace(/\s/g,'');if(t.includes('/')){const [a,b]=t.split('/');return parseFloat(a)/parseFloat(b)}return parseFloat(t)}
+function partOk(p,a){if(a===undefined||a===null||a==='')return false;if(p.type==='mc'||p.type==='dd')return Number(a)===p.ans;const n=parseNum(a);return !isNaN(n)&&Math.abs(n-p.ans)<=p.tol}
+const fmt=s=>{s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const fnum=x=>Number.isInteger(x)?String(x):x.toFixed(2).replace(/0+$/,'').replace(/\.$/,'');
+
+function home(){
+  clearInterval(timerH);$('#timerbar').innerHTML='';
+  const sv=store.get();
+  app.innerHTML=`<div class="card">
+  <div class="row">${sv&&!sv.done?`<button class="pri" id="bRes">▶ Resume test (version ${sv.seed})</button><button class="ghost" id="bNew">Start a new test</button>`:`<button class="pri" id="bNew">▶ Start the test</button>`}</div>
+  ${sv&&sv.done?`<p><small class="m">Last result: <b>${esc(sv.last||'')}</b></small></p>`:''}</div>`;
+  const r=$('#bRes');if(r)r.onclick=()=>begin(sv);
+  $('#bNew').onclick=()=>{if(sv&&!sv.done&&!confirm('Discard the unfinished test and start a new one?'))return;begin({seed:1+Math.floor(Math.random()*899999),ans:{},work:{},end:Date.now()+SECS*1000,done:false})};
+  window.scrollTo(0,0);
+}
+function setT(){T=GEO56.makeTest(S.seed);TOTAL=GEO56.totalOf(T)}
+function begin(st){S=st;setT();store.set(S);clearInterval(timerH);timerH=setInterval(tick,500);renderTest();tick()}
+function allParts(){const o=[];T.forEach(q=>q.parts.forEach((p,i)=>o.push([q,p,i])));return o}
+function answered(){return allParts().filter(([q,p,i])=>{const a=S.ans[q.n+'.'+i];return a!==undefined&&a!==''}).length}
+function tick(){if(!S||S.done){clearInterval(timerH);$('#timerbar').innerHTML='';return}
+  const left=Math.round((S.end-Date.now())/1000);
+  $('#timerbar').innerHTML=`<div class="timer${left<300?' low':''}"><span>⏱ ${fmt(left)}</span><span>${answered()}/${allParts().length} answers</span></div>`;
+  if(left<=0){alert("Time's up! Submitting your test.");submit(true)}}
+function renderTest(){
+  const sel=(q,p,i)=>{const k=q.n+'.'+i,v=S.ans[k],has=v!==undefined&&v!=='';return `<select class="dd${has?' has':''}" data-k="${k}" aria-label="${esc(p.l)}"><option value="">\u2014 choose \u2014</option>${p.opts.map((o,j)=>`<option value="${j}"${has&&String(v)===String(j)?' selected':''}>${esc(o)}</option>`).join('')}</select>`};
+  const cell=(q,r,col)=>{const bi=col==='S'?r.bs:r.br;return bi===undefined?esc(col==='S'?r.s:r.r):sel(q,q.parts[bi],bi)};
+  app.innerHTML=T.map(q=>q.proof?`<div class="card"><div class="qh"><span class="tag">${esc(q.topic)}</span><span class="pts">${fnum(q.pts)} pts</span></div>
+   <div class="qn">Question ${q.n} \u00B7 Two-column proof</div>${q.svg}<div class="q">${q.text}</div>
+   <table class="pf"><tr><th></th><th>Statements</th><th>Reasons</th></tr>${q.proof.rows.map((r,i)=>`<tr><td class="n"><span class="sw">Step </span>${i+1}</td><td data-l="Statement">${cell(q,r,'S')}</td><td data-l="Reason">${cell(q,r,'R')}</td></tr>`).join('')}</table></div>`:
+   `<div class="card"><div class="qh"><span class="tag">${esc(q.topic)}</span><span class="pts">${q.pts} pts</span></div>
+   <div class="qn">Question ${q.n}</div>${q.svg}<div class="q">${q.text}</div>
+   ${q.parts.map((p,i)=>{const k=q.n+'.'+i,v=S.ans[k];return p.type==='mc'?
+     `<div class="part"><label>${esc(p.l)}</label><div class="chips" data-k="${k}">${p.opts.map((o,j)=>`<button class="chip${String(v)===String(j)?' sel':''}" data-j="${j}">${esc(o)}</button>`).join('')}</div></div>`:
+     `<div class="part"><label for="i${k}">${esc(p.l)}</label><input class="ans" id="i${k}" data-k="${k}" inputmode="decimal" autocomplete="off" autocapitalize="off" value="${v!==undefined?esc(v):''}"></div>`}).join('')}
+   <textarea class="work" data-w="${q.n}" placeholder="Show your work here (not graded, but it helps you)">${esc(S.work[q.n]||'')}</textarea></div>`).join('')+
+   `<div class="row"><button class="warn" id="bSub" style="width:100%">Submit test</button></div>`;
+  document.querySelectorAll('select.dd').forEach(e=>e.addEventListener('change',()=>{S.ans[e.dataset.k]=e.value===''?'':+e.value;e.classList.toggle('has',e.value!=='');store.set(S);tick()}));
+  document.querySelectorAll('input.ans').forEach(i=>i.addEventListener('input',()=>{S.ans[i.dataset.k]=i.value;store.set(S);tick()}));
+  document.querySelectorAll('textarea.work').forEach(t=>t.addEventListener('input',()=>{S.work[t.dataset.w]=t.value;store.set(S)}));
+  document.querySelectorAll('.chips').forEach(c=>c.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{S.ans[c.dataset.k]=+b.dataset.j;store.set(S);c.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');tick()}));
+  $('#bSub').onclick=()=>{const un=allParts().length-answered();if(confirm(un?`${un} answer box(es) are blank. Submit anyway?`:'Submit your test?'))submit()};
+  window.scrollTo(0,0);
+}
+function submit(auto){if(S.done&&!auto)return;S.done=true;S.used=Math.min(SECS,SECS-Math.max(0,Math.round((S.end-Date.now())/1000)));clearInterval(timerH);$('#timerbar').innerHTML='';
+  const res=T.map(q=>{const rows=q.parts.map((p,i)=>({p,a:S.ans[q.n+'.'+i],ok:partOk(p,S.ans[q.n+'.'+i])}));return {q,rows,earned:rows.reduce((s,r)=>s+(r.ok?r.p.pts:0),0)}});
+  const raw=res.reduce((s,r)=>s+r.earned,0),scaled=raw/TOTAL*40;
+  S.last=`${scaled.toFixed(1)}/40 (${raw}/${TOTAL} raw)`;store.set(S);results(res,raw,scaled)}
+function proofReview(r){const q=r.q;
+  const cell=(row,col)=>{const bi=col==='S'?row.bs:row.br;const txt=col==='S'?row.s:row.r;if(bi===undefined)return esc(txt);const x=r.rows[bi];
+    if(x.ok)return `<div class="okc" style="padding:4px;border-radius:6px">\u2705 ${esc(txt)}</div>`;
+    const mine=x.a===undefined||x.a===''?'<i>(blank)</i>':esc(x.p.opts[x.a]);return `<div class="badcell" style="padding:4px;border-radius:6px">\u274C <s>${mine}</s><br><b>${esc(txt)}</b></div>`};
+  return `<table class="pf"><tr><th></th><th>Statements</th><th>Reasons</th></tr>${q.proof.rows.map((row,i)=>`<tr><td class="n"><span class="sw">Step </span>${i+1}</td><td data-l="Statement">${cell(row,'S')}</td><td data-l="Reason">${cell(row,'R')}</td></tr>`).join('')}</table><small class="m">Green = correct. Red shows your choice crossed out and the right answer. Each blank is worth 0.5 pt.</small>`}
+function results(res,raw,scaled){
+  const pct=Math.round(100*raw/TOTAL),weak=res.filter(r=>r.earned/r.q.pts<0.7).sort((a,b)=>a.earned/a.q.pts-b.earned/b.q.pts);
+  const show=(p,a)=>{if(a===undefined||a==='')return '<i>(blank)</i>';return p.type==='mc'?esc(p.opts[a]):esc(a)};
+  const key=p=>p.type==='mc'?esc(p.opts[p.ans]):fnum(p.ans);
+  app.innerHTML=`<div class="card" style="text-align:center"><div class="tag">Test result</div><div class="big">${scaled.toFixed(1)} / 40</div><div><b>${pct}%</b> · ${raw}/${TOTAL} raw points · time used ${fmt(S.used||0)}</div></div>
+  <div class="card"><b>${weak.length?'Weak topics to review':'No weak topics 🎉'}</b>${weak.map(r=>`<div class="wk"><b>Q${r.q.n}</b> ${esc(r.q.topic)}: ${fnum(r.earned)}/${fnum(r.q.pts)} pts</div>`).join('')}
+   <table style="margin-top:10px"><tr><th>Q</th><th>Topic</th><th style="text-align:right">Score</th></tr>${res.map(r=>`<tr><td>${r.q.n}</td><td>${esc(r.q.topic)}</td><td style="text-align:right"><span class="${r.earned===r.q.pts?'good':r.earned===0?'badc':''}">${fnum(r.earned)}/${fnum(r.q.pts)}</span></td></tr>`).join('')}</table></div>
+  ${res.map(r=>`<div class="card"><div class="qh"><span class="tag">${esc(r.q.topic)}</span><span class="pts">${fnum(r.earned)}/${fnum(r.q.pts)} pts</span></div><div class="qn">Question ${r.q.n}${r.q.proof?' \u00B7 Two-column proof':''}</div>${r.q.svg}<div class="q">${r.q.text}</div>
+   ${r.q.proof?proofReview(r):`<table class="rv"><tr><th>Part</th><th>Your answer</th><th>Correct</th><th></th></tr>${r.rows.map(x=>`<tr><td>${esc(x.p.l)}</td><td>${show(x.p,x.a)}</td><td><b>${key(x.p)}</b></td><td>${x.ok?'\u2705':'\u274C'}</td></tr>`).join('')}</table>
+   ${S.work[r.q.n]?`<small class="m">Your work:</small><div style="white-space:pre-wrap;background:#f1f5f9;border-radius:8px;padding:8px;font-size:14px">${esc(S.work[r.q.n])}</div>`:''}`}
+   <div class="sol"><b>Worked solution</b>${r.q.sol}</div></div>`).join('')}
+  <div class="row"><button class="pri" id="bNewT">New test (new numbers)</button><button class="sec" id="bHome">Back to start</button></div>`;
+  $('#bNewT').onclick=()=>begin({seed:1+Math.floor(Math.random()*899999),ans:{},work:{},end:Date.now()+SECS*1000,done:false});
+  $('#bHome').onclick=home;window.scrollTo(0,0)}
+(function init(){const sv=store.get();
+  if(sv&&!sv.done&&sv.end<=Date.now()){S=sv;setT();submit(true);return}
+  home()})();
+</script>
+<!--sh-version--><div id="sh-version" title="Tap for changelog" style="position:fixed;right:6px;bottom:4px;font:11px system-ui,sans-serif;color:#888;background:rgba(255,255,255,.75);padding:1px 6px;border-radius:6px;z-index:99999;cursor:pointer" data-log="Changelog&#10;v1.17: Accelerated Chapter 7 — quadratics with root rejection, systems, coordinate proofs and mixed transformations&#10;v1.16: Chapter 7 Challenge — 10 harder multi-step generated problems per attempt&#10;v1.15: Chapter 7 fresh procedural problems, 28 templates, shuffled choices and recent-question avoidance&#10;v1.14: Geometry Ch 7 practice (7.1–7.5 quadrilaterals &amp; polygons, 20 Q with worked solutions)&#10;v1.13: Geometry Ch 5–6 test now 13 questions: added 3 two-column proofs (fill-in Statement/Reason dropdowns, per-blank partial credit); 48 pts → /40, 55 min&#10;v1.12: Geometry Ch 5–6 is now one real-format test: 10 multi-step questions (36 pts → /40), 50 min, new numbers each time, worked solutions after submit&#10;v1.11: Geometry Ch 5–6 practice test&#10;v1.10: Chinese: Lesson 12 Dialogue 2 vocab (dining hall, 22 words)&#10;v1.9: Review sheets: Living Earth Unit 3 + Geometry Ch 5–6; Ch 6.1–6.3 practice&#10;v1.8: Living Earth labs + Unit 3 practice&#10;v1.7: Chapter 5 quiz now 10 questions (40 pts)&#10;v1.6: Geometry Chapter 5 quiz (congruent triangles)&#10;v1.5: Normal round: each word once, random 英翻中/音翻中; review list = last round&#x27;s misses&#10;v1.4: Review mode: only missed words, once each&#10;v1.3: Version label on every page (tap for changelog)&#10;v1.2: Chinese: English answers accept synonyms and small typos&#10;v1.1: Chinese: words you needed help on are repeated next round&#10;v1.0: Hosted online (no names)" onclick="alert(this.dataset.log)">v1.17 · 2026-11-08 11:20 PT</div><!--/sh-version--></body>
+</html>
