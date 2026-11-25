@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unit 4 Practice Test · DNA, Proteins &amp; Gene Expression</title>
+  <style>
+    :root {
+      --green: #047857;
+      --green-dark: #065f46;
+      --green-soft: #ecfdf5;
+      --green-line: #a7f3d0;
+      --ok: #15803d;
+      --ok-bg: #f0fdf4;
+      --bad: #b91c1c;
+      --bad-bg: #fef2f2;
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --bg: #ffffff;
+      --card: #ffffff;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font: 15px/1.48 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 8px 6px 36px;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .prog-wrap { flex: 1 1 200px; min-width: 0; }
+    .prog-text {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .pbar {
+      height: 7px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      max-width: 280px;
+    }
+    .pfill {
+      height: 100%;
+      width: 0;
+      background: var(--green);
+      border-radius: 999px;
+      transition: width 0.18s ease;
+    }
+    .toolbar-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn {
+      appearance: none;
+      font: inherit;
+      font-size: 13.5px;
+      font-weight: 700;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 8px 13px;
+      min-height: 38px;
+      cursor: pointer;
+    }
+    .btn:hover { background: #f8fafc; }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary { background: var(--green); border-color: var(--green); color: #fff; }
+    .btn.primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
+    .btn.chart-on { background: var(--green-soft); border-color: var(--green); color: var(--green-dark); }
+    .btn.big { width: 100%; font-size: 16px; padding: 13px 18px; min-height: 48px; border-radius: 12px; }
+    .btn.warn-state { background: #b45309; border-color: #b45309; color: #fff; }
+    .btn.small { font-size: 12.5px; padding: 5px 10px; min-height: 32px; }
+
+    .chart-panel {
+      margin: 0 0 18px;
+      border: 1.5px solid var(--green-line);
+      border-radius: 14px;
+      background: #f8fafc;
+      padding: 12px;
+    }
+    .chart-panel.hidden { display: none; }
+    .chart-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .chart-title { font-size: 14px; font-weight: 800; color: var(--green-dark); }
+    .codon-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .codon-table {
+      width: 100%;
+      min-width: 540px;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 11.5px;
+      border: 1px solid #cbd5e1;
+    }
+    .codon-table th, .codon-table td { border: 1px solid #cbd5e1; padding: 4px 6px; vertical-align: top; }
+    .codon-table thead th {
+      background: var(--green-soft);
+      color: var(--green-dark);
+      font-weight: 800;
+      text-align: center;
+      padding: 5px 6px;
+    }
+    .codon-table tbody th {
+      background: #f1f5f9;
+      color: var(--ink);
+      font-weight: 800;
+      text-align: center;
+      vertical-align: middle;
+      width: 28px;
+    }
+    .codon-table th.third-col { font-size: 10.5px; line-height: 1.55; color: var(--muted); }
+    .codon-line { display: flex; justify-content: space-between; gap: 6px; line-height: 1.48; white-space: nowrap; }
+    .codon-line code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 700;
+      background: transparent;
+      padding: 0;
+      color: #0f172a;
+    }
+    .codon-line.codon-start { background: #dcfce7; border-radius: 4px; padding: 0 3px; font-weight: 700; color: #14532d; }
+    .codon-line.codon-stop { background: #fee2e2; border-radius: 4px; padding: 0 3px; color: #991b1b; font-weight: 700; }
+    .codon-note { margin: 7px 0 0; font-size: 12px; color: var(--muted); }
+
+    h2.sec-head {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin: 22px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid #d1fae5;
+    }
+
+    .qcard {
+      background: var(--card);
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      margin: 0 0 12px;
+    }
+    .qcard.got { border-color: #86efac; border-left: 5px solid var(--ok); }
+    .qcard.miss { border-color: #fca5a5; border-left: 5px solid var(--bad); }
+    .qhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .qhead-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .qnum { font-weight: 800; font-size: 15px; color: var(--ink); }
+    .mark { font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 9px; }
+    .mark.ok { background: #dcfce7; color: var(--ok); }
+    .mark.bad { background: #fee2e2; color: var(--bad); }
+    .prompt { font-size: 15.5px; font-weight: 600; line-height: 1.45; margin: 0 0 10px; }
+    code.seq {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 2px 7px;
+      margin: 2px 0;
+      color: #0f172a;
+      word-break: break-word;
+    }
+    .inline-chart-slot { margin: 8px 0 10px; }
+    .choices { display: grid; gap: 7px; }
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      font-size: 14.5px;
+      line-height: 1.38;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 11px;
+      padding: 10px 12px;
+      min-height: 44px;
+      cursor: pointer;
+    }
+    .choice:hover:not(:disabled) { background: #f8fafc; border-color: #94a3b8; }
+    .choice.sel { border-color: var(--green); background: var(--green-soft); }
+    .choice .ltr {
+      flex: 0 0 23px;
+      height: 23px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .choice.sel .ltr { background: var(--green); color: #fff; }
+    .choice:disabled { cursor: default; }
+    .choice.right { border-color: var(--ok); background: var(--ok-bg); }
+    .choice.right .ltr { background: var(--ok); color: #fff; }
+    .choice.wrong { border-color: var(--bad); background: var(--bad-bg); }
+    .choice.wrong .ltr { background: var(--bad); color: #fff; }
+
+    .text-in-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .text-in {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 340px;
+      color: var(--ink);
+      background: #fff;
+      min-height: 44px;
+    }
+    .text-in:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.14); }
+    .text-in:disabled { background: #f8fafc; color: #334155; }
+
+    .result { margin-top: 9px; padding: 8px 11px; border-radius: 9px; font-size: 14px; font-weight: 700; }
+    .result.ok { background: var(--ok-bg); color: #14532d; }
+    .result.bad { background: var(--bad-bg); color: #7f1d1d; }
+    .expl {
+      margin-top: 7px;
+      padding: 9px 11px;
+      border-radius: 9px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #334155;
+    }
+    .expl b { color: var(--green-dark); }
+
+    .score-card {
+      border: 2px solid var(--green-line);
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 18px 16px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .score-big { font-size: 44px; font-weight: 800; line-height: 1.05; color: var(--green); }
+    .score-pct { font-size: 20px; font-weight: 800; margin: 4px 0 6px; }
+    .score-msg { color: var(--muted); font-size: 14.5px; margin: 0 0 12px; }
+    .secs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0 0 14px; }
+    .secs span { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 4px 10px; background: #e2e8f0; color: #334155; }
+    .secs span.full { background: #dcfce7; color: #166534; }
+    .secs span.some { background: #fef3c7; color: #92400e; }
+    .secs span.none { background: #fee2e2; color: #991b1b; }
+    .filter-row { display: flex; gap: 8px; margin: 0 0 14px; }
+    .filter-row .btn { flex: 1; }
+    .filter-row .btn.active { background: var(--green); border-color: var(--green); color: #fff; }
+    .submit-wrap { margin-top: 16px; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 480px) {
+      .page { padding: 6px 2px 28px; }
+      h1 { font-size: 18px; }
+      .qcard { padding: 12px; }
+      .score-big { font-size: 38px; }
+    }
+    @media print {
+      .toolbar, .filter-row, .submit-wrap, .qchart-btn { display: none !important; }
+      .chart-panel { display: block !important; }
+      .qcard { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Unit 4 Practice Test: DNA, Proteins &amp; Gene Expression</h1>
+
+    <div class="toolbar">
+      <div class="prog-wrap">
+        <div class="prog-text" id="progText">0 / 40 answered</div>
+        <div class="pbar" aria-hidden="true"><div class="pfill" id="pfill"></div></div>
+      </div>
+      <div class="toolbar-actions">
+        <button type="button" class="btn" id="toggleChartBtn">Show Codon Chart</button>
+        <button type="button" class="btn" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="chart-panel hidden" id="topChartPanel">
+      <div class="chart-head">
+        <span class="chart-title">Standard mRNA Codon Chart</span>
+      </div>
+      <div id="topChartBody"></div>
+    </div>
+
+    <div id="scoreWrap"></div>
+    <div id="questionsWrap"></div>
+
+    <div class="submit-wrap" id="submitWrap">
+      <button type="button" class="btn primary big" id="submitBtn">Submit Test</button>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const STORAGE_KEY = 'sh-le-u4-test-v1';
+      const LETTERS = 'ABCD';
+      const QUESTIONS = window.UNIT4_QUESTIONS;
+      const CODON_CHART_HTML = "<div class=\"codon-wrap\"><table class=\"codon-table\" aria-label=\"Standard mRNA Codon Chart\"><thead><tr><th rowspan=\"2\">1st<br>base</th><th colspan=\"4\">2nd base</th><th rowspan=\"2\">3rd<br>base</th></tr><tr><th>U</th><th>C</th><th>A</th><th>G</th></tr></thead><tbody><tr><th>U</th><td><div class=\"codon-line \"><code>UUU</code> <span>Phe</span></div><div class=\"codon-line \"><code>UUC</code> <span>Phe</span></div><div class=\"codon-line \"><code>UUA</code> <span>Leu</span></div><div class=\"codon-line \"><code>UUG</code> <span>Leu</span></div></td><td><div class=\"codon-line \"><code>UCU</code> <span>Ser</span></div><div class=\"codon-line \"><code>UCC</code> <span>Ser</span></div><div class=\"codon-line \"><code>UCA</code> <span>Ser</span></div><div class=\"codon-line \"><code>UCG</code> <span>Ser</span></div></td><td><div class=\"codon-line \"><code>UAU</code> <span>Tyr</span></div><div class=\"codon-line \"><code>UAC</code> <span>Tyr</span></div><div class=\"codon-line codon-stop\"><code>UAA</code> <span>Stop</span></div><div class=\"codon-line codon-stop\"><code>UAG</code> <span>Stop</span></div></td><td><div class=\"codon-line \"><code>UGU</code> <span>Cys</span></div><div class=\"codon-line \"><code>UGC</code> <span>Cys</span></div><div class=\"codon-line codon-stop\"><code>UGA</code> <span>Stop</span></div><div class=\"codon-line \"><code>UGG</code> <span>Trp</span></div></td><th class=\"third-col\">U<br>C<br>A<br>G</th></tr><tr><th>C</th><td><div class=\"codon-line \"><code>CUU</code> <span>Leu</span></div><div class=\"codon-line \"><code>CUC</code> <span>Leu</span></div><div class=\"codon-line \"><code>CUA</code> <span>Leu</span></div><div class=\"codon-line \"><code>CUG</code> <span>Leu</span></div></td><td><div class=\"codon-line \"><code>CCU</code> <span>Pro</span></div><div class=\"codon-line \"><code>CCC</code> <span>Pro</span></div><div class=\"codon-line \"><code>CCA</code> <span>Pro</span></div><div class=\"codon-line \"><code>CCG</code> <span>Pro</span></div></td><td><div class=\"codon-line \"><code>CAU</code> <span>His</span></div><div class=\"codon-line \"><code>CAC</code> <span>His</span></div><div class=\"codon-line \"><code>CAA</code> <span>Gln</span></div><div class=\"codon-line \"><code>CAG</code> <span>Gln</span></div></td><td><div class=\"codon-line \"><code>CGU</code> <span>Arg</span></div><div class=\"codon-line \"><code>CGC</code> <span>Arg</span></div><div class=\"codon-line \"><code>CGA</code> <span>Arg</span></div><div class=\"codon-line \"><code>CGG</code> <span>Arg</span></div></td><th class=\"third-col\">U<br>C<br>A<br>G</th></tr><tr><th>A</th><td><div class=\"codon-line \"><code>AUU</code> <span>Ile</span></div><div class=\"codon-line \"><code>AUC</code> <span>Ile</span></div><div class=\"codon-line \"><code>AUA</code> <span>Ile</span></div><div class=\"codon-line codon-start\"><code>AUG</code> <span>Met (Start)</span></div></td><td><div class=\"codon-line \"><code>ACU</code> <span>Thr</span></div><div class=\"codon-line \"><code>ACC</code> <span>Thr</span></div><div class=\"codon-line \"><code>ACA</code> <span>Thr</span></div><div class=\"codon-line \"><code>ACG</code> <span>Thr</span></div></td><td><div class=\"codon-line \"><code>AAU</code> <span>Asn</span></div><div class=\"codon-line \"><code>AAC</code> <span>Asn</span></div><div class=\"codon-line \"><code>AAA</code> <span>Lys</span></div><div class=\"codon-line \"><code>AAG</code> <span>Lys</span></div></td><td><div class=\"codon-line \"><code>AGU</code> <span>Ser</span></div><div class=\"codon-line \"><code>AGC</code> <span>Ser</span></div><div class=\"codon-line \"><code>AGA</code> <span>Arg</span></div><div class=\"codon-line \"><code>AGG</code> <span>Arg</span></div></td><th class=\"third-col\">U<br>C<br>A<br>G</th></tr><tr><th>G</th><td><div class=\"codon-line \"><code>GUU</code> <span>Val</span></div><div class=\"codon-line \"><code>GUC</code> <span>Val</span></div><div class=\"codon-line \"><code>GUA</code> <span>Val</span></div><div class=\"codon-line \"><code>GUG</code> <span>Val</span></div></td><td><div class=\"codon-line \"><code>GCU</code> <span>Ala</span></div><div class=\"codon-line \"><code>GCC</code> <span>Ala</span></div><div class=\"codon-line \"><code>GCA</code> <span>Ala</span></div><div class=\"codon-line \"><code>GCG</code> <span>Ala</span></div></td><td><div class=\"codon-line \"><code>GAU</code> <span>Asp</span></div><div class=\"codon-line \"><code>GAC</code> <span>Asp</span></div><div class=\"codon-line \"><code>GAA</code> <span>Glu</span></div><div class=\"codon-line \"><code>GAG</code> <span>Glu</span></div></td><td><div class=\"codon-line \"><code>GGU</code> <span>Gly</span></div><div class=\"codon-line \"><code>GGC</code> <span>Gly</span></div><div class=\"codon-line \"><code>GGA</code> <span>Gly</span></div><div class=\"codon-line \"><code>GGG</code> <span>Gly</span></div></td><th class=\"third-col\">U<br>C<br>A<br>G</th></tr></tbody></table><p class=\"codon-note\">Always look up the <b>mRNA codon</b> (5&#8242;&#8594;3&#8242;), not DNA or tRNA anticodons. <b>AUG</b> = Start (Met); <b>UAA, UAG, UGA</b> = Stop.</p></div>";
+
+      document.getElementById('topChartBody').innerHTML = CODON_CHART_HTML;
+
+      function shuffle(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+      }
+
+      function makeOrders() {
+        const orders = {};
+        QUESTIONS.forEach(q => {
+          if (q.type === 'mc') orders[q.id] = shuffle([0, 1, 2, 3]);
+        });
+        return orders;
+      }
+
+      function freshState() {
+        return { orders: makeOrders(), answers: {}, submitted: false, filter: 'all' };
+      }
+
+      let state = null;
+      try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) {}
+      if (!state || typeof state !== 'object' || !state.orders) state = freshState();
+      state.answers = state.answers || {};
+      state.filter = state.filter || 'all';
+
+      function save() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+      }
+
+      function normalizeInput(kind, raw) {
+        let s = String(raw == null ? '' : raw).trim().toUpperCase();
+        if (kind === 'percent') return s.replace(/%/g, '').replace(/\s+/g, '');
+        s = s.replace(/5['\u2032]?-?/g, '').replace(/-?3['\u2032]?/g, '');
+        return s.replace(/[^AUCGT]/g, '');
+      }
+
+      function isAnswered(q) {
+        const v = state.answers[q.id];
+        if (q.type === 'mc') return typeof v === 'number';
+        return String(v == null ? '' : v).trim().length > 0;
+      }
+
+      function isCorrect(q) {
+        const v = state.answers[q.id];
+        if (q.type === 'mc') {
+          const order = state.orders[q.id] || [0, 1, 2, 3];
+          return typeof v === 'number' && order[v] === 0;
+        }
+        const norm = normalizeInput(q.inputKind, v);
+        return q.accept.some(a => normalizeInput(q.inputKind, a) === norm);
+      }
+
+      function answeredCount() {
+        return QUESTIONS.reduce((n, q) => n + (isAnswered(q) ? 1 : 0), 0);
+      }
+
+      const progText = document.getElementById('progText');
+      const pfill = document.getElementById('pfill');
+      const scoreWrap = document.getElementById('scoreWrap');
+      const questionsWrap = document.getElementById('questionsWrap');
+      const submitWrap = document.getElementById('submitWrap');
+      const submitBtn = document.getElementById('submitBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const toggleChartBtn = document.getElementById('toggleChartBtn');
+      const topChartPanel = document.getElementById('topChartPanel');
+
+      let submitConfirmTimer = null;
+      let resetConfirmTimer = null;
+      let openInlineChartId = null;
+
+      function updateProgress() {
+        const n = answeredCount();
+        const total = QUESTIONS.length;
+        progText.textContent = n + ' / ' + total + ' answered';
+        pfill.style.width = Math.round((100 * n) / total) + '%';
+      }
+
+      function setTopChart(show) {
+        topChartPanel.classList.toggle('hidden', !show);
+        toggleChartBtn.classList.toggle('chart-on', show);
+        toggleChartBtn.textContent = show ? 'Hide Codon Chart' : 'Show Codon Chart';
+      }
+
+      toggleChartBtn.addEventListener('click', () => {
+        setTopChart(topChartPanel.classList.contains('hidden'));
+      });
+
+      function renderScore() {
+        if (!state.submitted) { scoreWrap.innerHTML = ''; return; }
+        const total = QUESTIONS.length;
+        let got = 0;
+        const bySec = {};
+        QUESTIONS.forEach(q => {
+          bySec[q.section] = bySec[q.section] || [0, 0];
+          bySec[q.section][1]++;
+          if (isCorrect(q)) { got++; bySec[q.section][0]++; }
+        });
+        const missed = total - got;
+        const pct = Math.round((100 * got) / total);
+        const msg = pct >= 90
+          ? 'Strong mastery across Unit 4.'
+          : pct >= 80
+            ? 'Solid score. Review the explanations for the missed items.'
+            : pct >= 70
+              ? 'Good foundation. Focus on the sections marked yellow or red below.'
+              : 'Review the explanations below, then retake for another full run.';
+
+        const secPills = Object.keys(bySec).map(sec => {
+          const [okCount, tot] = bySec[sec];
+          const cls = okCount === tot ? 'full' : okCount === 0 ? 'none' : 'some';
+          return '<span class="' + cls + '">' + sec + ': ' + okCount + '/' + tot + '</span>';
+        }).join('');
+
+        scoreWrap.innerHTML =
+          '<section class="score-card" id="scoreSummary">' +
+            '<div class="score-big">' + got + ' / ' + total + '</div>' +
+            '<div class="score-pct">' + pct + '%</div>' +
+            '<p class="score-msg">' + msg + '</p>' +
+            '<div class="secs">' + secPills + '</div>' +
+            '<button type="button" class="btn primary" id="retakeBtn">Retake Test (Shuffle Choices)</button>' +
+          '</section>' +
+          '<div class="filter-row">' +
+            '<button type="button" class="btn' + (state.filter === 'all' ? ' active' : '') + '" data-filter="all">All Questions (' + total + ')</button>' +
+            '<button type="button" class="btn' + (state.filter === 'miss' ? ' active' : '') + '" data-filter="miss">Missed Only (' + missed + ')</button>' +
+          '</div>';
+
+        document.getElementById('retakeBtn').addEventListener('click', () => {
+          state = freshState();
+          openInlineChartId = null;
+          save();
+          render();
+          window.scrollTo(0, 0);
+        });
+        scoreWrap.querySelectorAll('[data-filter]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.filter = btn.dataset.filter;
+            save();
+            renderQuestions();
+            renderScore();
+          });
+        });
+      }
+
+      function renderQuestions() {
+        let html = '';
+        let lastSection = '';
+        let visibleCount = 0;
+
+        QUESTIONS.forEach(q => {
+          const ok = state.submitted ? isCorrect(q) : false;
+          if (state.submitted && state.filter === 'miss' && ok) return;
+          visibleCount++;
+
+          if (q.section !== lastSection) {
+            lastSection = q.section;
+            html += '<h2 class="sec-head">' + q.section + '</h2>';
+          }
+
+          const cardCls = 'qcard' + (state.submitted ? (ok ? ' got' : ' miss') : '');
+          const markHtml = state.submitted
+            ? '<span class="mark ' + (ok ? 'ok' : 'bad') + '">' + (ok ? '✓ Correct' : '✗ Missed') + '</span>'
+            : '';
+          const chartBtnHtml = q.usesChart
+            ? '<button type="button" class="btn small qchart-btn" data-chart-q="' + q.id + '">' + (openInlineChartId === q.id ? 'Hide Chart' : 'Codon Chart') + '</button>'
+            : '';
+
+          html += '<article class="' + cardCls + '" id="q' + q.id + '">';
+          html += '<div class="qhead"><div class="qhead-left"><span class="qnum">Question ' + q.id + '</span>' + markHtml + '</div>' + chartBtnHtml + '</div>';
+          html += '<div class="prompt">' + q.prompt + '</div>';
+
+          if (q.usesChart && openInlineChartId === q.id) {
+            html += '<div class="inline-chart-slot">' + CODON_CHART_HTML + '</div>';
+          }
+
+          if (q.type === 'mc') {
+            const order = state.orders[q.id] || [0, 1, 2, 3];
+            const picked = state.answers[q.id];
+            html += '<div class="choices" role="radiogroup" aria-label="Question ' + q.id + '">';
+            order.forEach((origIdx, ci) => {
+              let cls = 'choice';
+              if (picked === ci) cls += ' sel';
+              if (state.submitted) {
+                if (origIdx === 0) cls += ' right';
+                else if (picked === ci) cls += ' wrong';
+              }
+              html += '<button type="button" role="radio" aria-checked="' + (picked === ci) + '" class="' + cls + '" data-q="' + q.id + '" data-c="' + ci + '"' + (state.submitted ? ' disabled' : '') + '>' +
+                '<span class="ltr">' + LETTERS[ci] + '</span><span>' + q.choices[origIdx] + '</span></button>';
+            });
+            html += '</div>';
+          } else {
+            const val = state.answers[q.id] || '';
+            const safeVal = String(val).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+            html += '<div class="text-in-wrap">' +
+              '<input type="text" class="text-in" data-text-q="' + q.id + '" value="' + safeVal + '" placeholder="' + (q.placeholder || '') + '" autocomplete="off" autocapitalize="characters" spellcheck="false"' + (state.submitted ? ' disabled' : '') + '>' +
+              '</div>';
+          }
+
+          if (state.submitted) {
+            if (!ok) {
+              const rightText = q.type === 'mc' ? q.choices[0] : q.displayAnswer;
+              html += '<div class="result bad">' + (isAnswered(q) ? 'Incorrect' : 'Unanswered') + ' — Correct answer: ' + rightText + '</div>';
+            } else {
+              html += '<div class="result ok">✓ Correct</div>';
+            }
+            html += '<div class="expl"><b>Why:</b> ' + q.explain + '</div>';
+          }
+
+          html += '</article>';
+        });
+
+        if (state.submitted && visibleCount === 0) {
+          html = '<div class="qcard" style="text-align:center;font-weight:700;color:#15803d;">No missed questions — 40 / 40!</div>';
+        }
+
+        questionsWrap.innerHTML = html;
+
+        questionsWrap.querySelectorAll('button.choice').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (state.submitted) return;
+            const qid = +btn.dataset.q;
+            const ci = +btn.dataset.c;
+            state.answers[qid] = ci;
+            save();
+            updateProgress();
+            btn.parentNode.querySelectorAll('.choice').forEach(b => {
+              const on = b === btn;
+              b.classList.toggle('sel', on);
+              b.setAttribute('aria-checked', on);
+            });
+            resetSubmitConfirm();
+          });
+        });
+
+        questionsWrap.querySelectorAll('input[data-text-q]').forEach(inp => {
+          inp.addEventListener('input', () => {
+            if (state.submitted) return;
+            const qid = +inp.dataset.textQ;
+            state.answers[qid] = inp.value;
+            save();
+            updateProgress();
+            resetSubmitConfirm();
+          });
+        });
+
+        questionsWrap.querySelectorAll('[data-chart-q]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const qid = +btn.dataset.chartQ;
+            openInlineChartId = openInlineChartId === qid ? null : qid;
+            renderQuestions();
+          });
+        });
+      }
+
+      function resetSubmitConfirm() {
+        if (submitConfirmTimer) { clearTimeout(submitConfirmTimer); submitConfirmTimer = null; }
+        submitBtn.classList.remove('warn-state');
+        submitBtn.textContent = 'Submit Test';
+      }
+
+      submitBtn.addEventListener('click', () => {
+        if (state.submitted) return;
+        const left = QUESTIONS.length - answeredCount();
+        if (left > 0 && !submitBtn.classList.contains('warn-state')) {
+          submitBtn.classList.add('warn-state');
+          submitBtn.textContent = left + ' unanswered — Click again to grade anyway';
+          submitConfirmTimer = setTimeout(resetSubmitConfirm, 5000);
+          return;
+        }
+        resetSubmitConfirm();
+        state.submitted = true;
+        state.filter = 'all';
+        save();
+        render();
+        window.scrollTo(0, 0);
+      });
+
+      function resetResetConfirm() {
+        if (resetConfirmTimer) { clearTimeout(resetConfirmTimer); resetConfirmTimer = null; }
+        resetBtn.classList.remove('warn-state');
+        resetBtn.textContent = 'Reset';
+      }
+
+      resetBtn.addEventListener('click', () => {
+        if (!resetBtn.classList.contains('warn-state')) {
+          resetBtn.classList.add('warn-state');
+          resetBtn.textContent = 'Confirm Reset';
+          resetConfirmTimer = setTimeout(resetResetConfirm, 4000);
+          return;
+        }
+        resetResetConfirm();
+        state = freshState();
+        openInlineChartId = null;
+        save();
+        render();
+        window.scrollTo(0, 0);
+      });
+
+      function render() {
+        updateProgress();
+        renderScore();
+        renderQuestions();
+        submitWrap.classList.toggle('hidden', state.submitted);
+      }
+
+      render();
+    })();
+  </script>
+</body>
+</html>

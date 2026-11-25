@@ -73,6 +73,11 @@
               id: 'unit4-learning',
               title: 'Learning',
               src: './biology/unit4-learning/'
+            },
+            {
+              id: 'unit4-test',
+              title: 'Unit 4 Test',
+              src: './biology/unit4-test/'
             }
           ]
         },
@@ -195,6 +200,7 @@
     'ch5': 'ch5-quiz',
     'unit4': 'unit4-learning',
     'unit4-learning': 'unit4-learning',
+    'unit4-test': 'unit4-test',
     'unit3': 'unit3-labs',
     'labs': 'unit3-labs',
     'cells-mitosis': 'unit2',
